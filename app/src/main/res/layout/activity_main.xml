@@ -62,6 +62,7 @@
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:text="Nowa Gra"
+            android:onClick="newGame"
             tools:ignore="MissingConstraints" />
 
         <Button
@@ -69,6 +70,7 @@
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:text="Wczytaj grę"
+            android:onClick="loadGame"
             tools:ignore="MissingConstraints" />
 
         <Button
@@ -76,6 +78,7 @@
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:text="Wyjście"
+            android:onClick="exit"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 
