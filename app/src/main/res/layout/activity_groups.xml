@@ -6,17 +6,344 @@
     android:layout_height="match_parent"
     tools:context=".GroupsActivity">
 
-    <TextView
-        android:id="@+id/textView4"
+    <LinearLayout
+        android:textAlignment="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Groups"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="Grupa A"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="Nr" />
+            <TextView
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="Drużyna"/>
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="Pkt"/>
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="W"/>
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="R"/>
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="P"/>
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="BZ"/>
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="BS"/>
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="RB"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="1" />
+
+            <TextView
+                android:id="@+id/team1"
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:padding="10dp" />
+            <TextView
+                android:id="@+id/points1"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/wins1"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/ties1"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/loss1"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/goalScored1"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/goalConceded1"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0" />
+            <TextView
+                android:id="@+id/goalDifference1"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="2" />
+            <TextView
+                android:id="@+id/team2"
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:padding="10dp"/>
+            <TextView
+                android:id="@+id/points2"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/wins2"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/ties2"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/loss2"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/goalScored2"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/goalConceded2"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/goalDifference2"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="3" />
+            <TextView
+                android:id="@+id/team3"
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:padding="10dp"/>
+            <TextView
+                android:id="@+id/points3"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/wins3"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/ties3"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/loss3"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/goalScored3"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/goalConceded3"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/goalDifference3"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="4" />
+
+            <TextView
+                android:id="@+id/team4"
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:padding="10dp" />
+            <TextView
+                android:id="@+id/points4"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/wins4"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/ties4"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/loss4"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/goalScored4"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/goalConceded4"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/goalDifference4"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/prevButton"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:onClick="prevGroup"
+        android:text="porzednia grupa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6"
         tools:ignore="MissingConstraints" />
     <Button
+        android:id="@+id/nextButton"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:onClick="nextGroup"
+        android:text="następna grupa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/button"
         android:layout_width="300dp"
         android:layout_height="60dp"
         android:layout_margin="10dp"
