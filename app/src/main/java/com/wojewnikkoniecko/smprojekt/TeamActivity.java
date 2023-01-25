@@ -5,14 +5,21 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class TeamActivity  extends AppCompatActivity {
+public class TeamActivity extends AppCompatActivity {
     EditText editTeamID;
     EditText editTeamName;
     EditText editGroupID;
+    Button backButton;
+    Button DeleteButton;
+    Button UpdateButton;
+    Button FetchButton;
+    Button InsertButton;
+    Button ConfirmButton;
 
     public DatabaseManager dbManager;
 
@@ -23,34 +30,119 @@ public class TeamActivity  extends AppCompatActivity {
         editTeamID = (EditText) findViewById(R.id.editTextID);
         editTeamName = (EditText) findViewById(R.id.editTextTeamName);
         editGroupID = (EditText) findViewById(R.id.editTextGroupID);
+        backButton = (Button) findViewById(R.id.backButton);
+        ConfirmButton = (Button) findViewById(R.id.ConfirmButton);
+        DeleteButton = (Button) findViewById(R.id.DeleteButton);
+        UpdateButton = (Button) findViewById(R.id.UpdateButton);
+        FetchButton = (Button) findViewById(R.id.FetchButton);
+        InsertButton = (Button) findViewById(R.id.InsertButton);
+
+        editTeamID.setVisibility(View.GONE);
+        editTeamName.setVisibility(View.GONE);
+        editGroupID.setVisibility(View.GONE);
+
+        backButton.setVisibility(View.GONE);
+        ConfirmButton.setVisibility(View.GONE);
+
 
         dbManager = new DatabaseManager(this);
-        try{
+        try {
             dbManager.open();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void btnInsertPressed(View view){
-        String team = editTeamName.getText().toString();
-        String GroupId = editGroupID.getText().toString();
-        dbManager.insert(team,GroupId);
+
+    public void btnBackPressed(View view) {
+        editTeamID.setVisibility(View.GONE);
+        editTeamName.setVisibility(View.GONE);
+        editGroupID.setVisibility(View.GONE);
+
+        backButton.setVisibility(View.GONE);
+        ConfirmButton.setVisibility(View.GONE);
+
+        DeleteButton.setVisibility(View.VISIBLE);
+        UpdateButton.setVisibility(View.VISIBLE);
+        FetchButton.setVisibility(View.VISIBLE);
+        InsertButton.setVisibility(View.VISIBLE);
     }
-    public void btnUpdatePressed(View view){
-        dbManager.update( Long.parseLong(editTeamID.getText().toString()),editTeamName.getText().toString(), editGroupID.getText().toString());
-    }
-    public void btnFetchPressed(View view){
-        Cursor cursor = dbManager.fetch();
-        if(cursor.moveToFirst()){
-            do{
-                @SuppressLint("Range") String ID = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Team_ID));
-                @SuppressLint("Range") String Team = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Team_Name));
-                @SuppressLint("Range") String GroupID = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Group_ID));
-                Log.i("Database_TAG",ID + " " + Team + " " + GroupID);
-            }while(cursor.moveToNext());
+
+    public void btnConfirmPressed(View view) {
+        if (FetchButton.getVisibility() == View.VISIBLE) {
+            Cursor cursor = dbManager.fetch();
+            if (cursor.moveToFirst()) {
+                do {
+                    @SuppressLint("Range") String ID = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Team_ID));
+                    @SuppressLint("Range") String Team = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Team_Name));
+                    @SuppressLint("Range") String GroupID = cursor.getString(cursor.getColumnIndex(DatabaseHelper.Group_ID));
+                    Log.i("Database_TAG", ID + " " + Team + " " + GroupID);
+                } while (cursor.moveToNext());
+            }
+        } else if (UpdateButton.getVisibility() == View.VISIBLE) {
+            dbManager.update(Long.parseLong(editTeamID.getText().toString()), editTeamName.getText().toString(), editGroupID.getText().toString());
+        } else if (DeleteButton.getVisibility() == View.VISIBLE) {
+            dbManager.delete(Long.parseLong(editTeamID.getText().toString()));
+        } else if (InsertButton.getVisibility() == View.VISIBLE) {
+            String team = editTeamName.getText().toString();
+            String GroupId = editGroupID.getText().toString();
+            dbManager.insert(team, GroupId);
         }
     }
-    public void btnDeletePressed(View view){
-        dbManager.delete(Long.parseLong(editTeamID.getText().toString()));
+
+    public void btnInsertPressed(View view) {
+        editTeamID.setVisibility(View.GONE);
+        editTeamName.setVisibility(View.VISIBLE);
+        editGroupID.setVisibility(View.VISIBLE);
+
+        backButton.setVisibility(View.VISIBLE);
+        ConfirmButton.setVisibility(View.VISIBLE);
+
+        DeleteButton.setVisibility(View.GONE);
+        UpdateButton.setVisibility(View.GONE);
+        FetchButton.setVisibility(View.GONE);
+        InsertButton.setVisibility(View.VISIBLE);
+    }
+
+    public void btnUpdatePressed(View view) {
+        editTeamID.setVisibility(View.VISIBLE);
+        editTeamName.setVisibility(View.VISIBLE);
+        editGroupID.setVisibility(View.VISIBLE);
+
+        backButton.setVisibility(View.VISIBLE);
+        ConfirmButton.setVisibility(View.VISIBLE);
+
+        DeleteButton.setVisibility(View.GONE);
+        UpdateButton.setVisibility(View.VISIBLE);
+        FetchButton.setVisibility(View.GONE);
+        InsertButton.setVisibility(View.GONE);
+    }
+
+    public void btnFetchPressed(View view) {
+        editTeamID.setVisibility(View.GONE);
+        editTeamName.setVisibility(View.GONE);
+        editGroupID.setVisibility(View.GONE);
+
+        backButton.setVisibility(View.VISIBLE);
+        ConfirmButton.setVisibility(View.VISIBLE);
+
+        DeleteButton.setVisibility(View.GONE);
+        UpdateButton.setVisibility(View.GONE);
+        FetchButton.setVisibility(View.GONE);
+        InsertButton.setVisibility(View.GONE);
+
+    }
+
+    public void btnDeletePressed(View view) {
+        editTeamID.setVisibility(View.VISIBLE);
+        editTeamName.setVisibility(View.GONE);
+        editGroupID.setVisibility(View.GONE);
+
+        backButton.setVisibility(View.VISIBLE);
+        ConfirmButton.setVisibility(View.VISIBLE);
+
+        DeleteButton.setVisibility(View.VISIBLE);
+        UpdateButton.setVisibility(View.GONE);
+        FetchButton.setVisibility(View.GONE);
+        InsertButton.setVisibility(View.GONE);
     }
 }
