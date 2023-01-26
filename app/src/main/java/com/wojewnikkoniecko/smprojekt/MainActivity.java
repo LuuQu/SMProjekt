@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = new Intent(MainActivity.this, TeamActivity.class);
-        startActivity(intent);
+        //startActivity(intent);
     }
     public void newGame(View view) {
         Intent i = new Intent(this, ChoosingTeamActivity.class);
