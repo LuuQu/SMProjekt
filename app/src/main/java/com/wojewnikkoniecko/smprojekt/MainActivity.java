@@ -12,8 +12,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(MainActivity.this, TeamActivity.class);
+        //Intent intent = new Intent(MainActivity.this, TeamActivity.class);
+        //loadFromDbToMemory();
         //startActivity(intent);
+    }
+    private void loadFromDbToMemory() {
+        //OldSQLiteManager sqLiteManager = OldSQLiteManager.instanceOfDatabase(this);
+        //sqLiteManager.populateTeamListArray();
     }
     public void newGame(View view) {
         Intent i = new Intent(this, ChoosingTeamActivity.class);
@@ -25,5 +30,9 @@ public class MainActivity extends AppCompatActivity {
     }
     public void exit(View view) {
         System.exit(0);
+    }
+    public void teamActivity(View view) {
+        Intent i = new Intent(this, ManagingTeamsActivity.class);
+        startActivity(i);
     }
 }

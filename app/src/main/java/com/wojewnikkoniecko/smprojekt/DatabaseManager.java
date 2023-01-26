@@ -1,86 +1,78 @@
 package com.wojewnikkoniecko.smprojekt;
 
+import android.content.ContentValues;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.util.Log;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.RequiresApi;
-
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
-public class DatabaseManager {
-
-    List<Team> list = new ArrayList<>();
-
-    public DatabaseManager(){
-        list.add(new Team(1,"Qatar", "A"));
-        list.add(new Team(2,"Ecuador", "A"));
-        list.add(new Team(3,"Senegal", "A"));
-        list.add(new Team(4,"Netherlands", "A"));
-        list.add(new Team(5,"England", "B"));
-        list.add(new Team(6,"United States", "B"));
-        list.add(new Team(7,"Iran", "B"));
-        list.add(new Team(8,"Wales", "B"));
-        list.add(new Team(9,"Argentina", "C"));
-        list.add(new Team(10,"Poland", "C"));
-        list.add(new Team(11,"Mexico", "C"));
-        list.add(new Team(12,"Saudi Arabia", "C"));
-        list.add(new Team(13,"France", "D"));
-        list.add(new Team(14,"Australia", "D"));
-        list.add(new Team(15,"Tunisia", "D"));
-        list.add(new Team(16,"Denmark", "D"));
-        list.add(new Team(17,"Japan", "E"));
-        list.add(new Team(18,"Spain", "E"));
-        list.add(new Team(19,"Germany", "E"));
-        list.add(new Team(20,"Costa Rica", "E"));
-        list.add(new Team(21,"Morocco", "F"));
-        list.add(new Team(22,"Croatia", "F"));
-        list.add(new Team(23,"Belgium", "F"));
-        list.add(new Team(24,"Canada", "F"));
-        list.add(new Team(25,"Brazil", "G"));
-        list.add(new Team(26,"Switzerland", "G"));
-        list.add(new Team(27,"Cameroon", "G"));
-        list.add(new Team(28,"Serbia", "G"));
-        list.add(new Team(29,"Portugal", "H"));
-        list.add(new Team(30,"South Korea", "H"));
-        list.add(new Team(31,"Uruguay", "H"));
-        list.add(new Team(32,"Ghana", "H"));
+public class DatabaseManager extends SQLiteOpenHelper {
+    private final String TABLE_NAME = "Teams";
+    private final String TEAM_NAME = "Name";
+    private final String TEAM_GROUP = "TeamGroup";
+    private final String TEAM_ID = "Id";
+    public DatabaseManager(@Nullable Context context) {
+        super(context, "WcDataBase", null, 1);
     }
 
-    public void insert (String team, String groupID){
-        int lenght = list.size();
-        Team newTeam = new Team(lenght + 1, team,groupID);
-        list.add(newTeam);
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        String statement = "CREATE TABLE "+ TABLE_NAME + " (" + TEAM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TEAM_GROUP + " TEXT, "+ TEAM_NAME + " TEXT)";
+        sqLiteDatabase.execSQL(statement);
     }
 
-    public List<Team> fetch(){
-        return list;
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+
     }
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public void update(int id, String team, String group){
-        this.list = fetch();
-        Team teamToUpdate = new Team(id, team, group);
-        teamToUpdate.TeamName = team;
-        teamToUpdate.Group = group;
-        try {
-            list.remove(id);
-            list.add(teamToUpdate);
-            list.sort(Comparator.comparing(Team::getTeamID));
-            Collections.reverse(list);
-        }catch(Exception e){
-            e.printStackTrace();
+    public Boolean AddTeam(Team team) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TEAM_GROUP,team.getGroup());
+        contentValues.put(TEAM_NAME,team.getName());
+        Team.teamArrayList.add(team);
+        long insert = db.insert(TABLE_NAME, null, contentValues);
+        if(insert == -1) {
+            return false;
         }
+        return true;
     }
-    public void delete(int id){
-        try{
-            list.remove(id - 1);
-        }catch(Exception e){
-            e.printStackTrace();
+    public ArrayList<Team> GetAllTeams() {
+        ArrayList<Team> result = new ArrayList<Team>();
+        String querystring = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(querystring,null);
+        if(cursor.moveToFirst()){
+            do{
+                int id = cursor.getInt(0);
+                String group = cursor.getString(1);
+                String name = cursor.getString(2);
+                Team team = new Team(id,name,group);
+                result.add(team);
+            }while (cursor.moveToNext());
         }
+        cursor.close();
+        db.close();
+        return result;
+    }
+    public void UpdateTeam(Team team) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "UPDATE " + TABLE_NAME + " SET " + TEAM_NAME + " = '" + team.getName() + "', " + TEAM_GROUP + " = '" + team.getGroup() +
+                "' WHERE " + TEAM_ID + " = " + team.getId();
+        db.execSQL(queryString);
+
+    }
+    public boolean DeleteOneTeam(Team team) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + TABLE_NAME + " WHERE " + TEAM_ID + " = " + team.getId();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if(cursor.moveToFirst()) {
+            return true;
+        }
+        return false;
     }
 }
