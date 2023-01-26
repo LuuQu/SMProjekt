@@ -77,13 +77,14 @@
         android:id="@+id/nextMatch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Następny mecz"
         android:onClick="NextMatch"
+        android:text="Następny mecz"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.844" />
+        app:layout_constraintVertical_bias="0.734" />
 
     <Button
         android:id="@+id/toTable"
@@ -97,4 +98,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.929" />
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="403dp"
+        android:layout_height="336dp"
+        app:layout_constraintBottom_toTopOf="@+id/versus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.41">
+
+        <TextView
+            android:id="@+id/text_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:text="Teams:"
+            android:textSize="30dp" />
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

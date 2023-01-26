@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,14 +25,14 @@ import java.util.Random;
 public class SimulateGroupStage extends AppCompatActivity {
     List<Team> teams = new ArrayList<>();
     List<Match> matches = new ArrayList<>();
-    List<Match> chosenTeamMatches = new ArrayList<>();
+    List<Match> playedMatches = new ArrayList<>();
     List<MatchResult> results = new ArrayList<>();
     DatabaseManager databaseManager = new DatabaseManager();
     String chosenTeam;
     String group;
     String placeInGroup;
     Match nextMatch;
-    int max_index = 0;
+    int max_index = 48;
     Button Simulate;
     int index = 0;
     boolean isLoaded = false;
@@ -57,17 +58,17 @@ public class SimulateGroupStage extends AppCompatActivity {
         placeInGroup = getIntent().getStringExtra("Group");
         String[] tmp = placeInGroup.split("");
         group = tmp[0];
-        if(!isLoaded){
+        /*if(!isLoaded){
             for(Match item : matches){
                 if(item.Home.equals(placeInGroup) || item.Away.equals(placeInGroup)){
                     chosenTeamMatches.add(item);
                 }
             }
             isLoaded = true;
-        }
+        }*/
 
-        nextMatch = chosenTeamMatches.get(index);
-        max_index = chosenTeamMatches.size() / 2;
+        nextMatch = matches.get(index);
+        //max_index = playedMatches.size() / 2;
         Home = findViewById(R.id.homeTeam);
         Away = findViewById(R.id.awayTeam);
         String TeamNameHome = null;
@@ -79,6 +80,28 @@ public class SimulateGroupStage extends AppCompatActivity {
                 TeamNameAway = item.TeamName;
             }
         }
+        StringBuilder sb = new StringBuilder();
+        for (MatchResult item : results) {
+            for(Match match : matches){
+                if(item.MatchId == match.MatchId){
+                    String homeTeamName = "undefined";
+                    String awayTeamName = "undefined";
+                    for(Team team : teams){
+                        if(team.Group.equals(match.Home)){
+                            homeTeamName = team.TeamName;
+                        } else if(team.Group.equals(match.Away)){
+                            awayTeamName = team.TeamName;
+                        }
+                    }
+                    sb.append(homeTeamName + " " + item.homeGoals + " : " + item.awayGoals  + " " + awayTeamName);
+                }
+            }
+            sb.append("\n");
+        }
+        ScrollView scrollView = findViewById(R.id.scroll);
+        scrollView.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 100);
+        TextView textbox = findViewById(R.id.text_box);;
+        textbox.setText(sb.toString());
         Home.setText(TeamNameHome);
         Away.setText(TeamNameAway);
         homeGoalsText.setVisibility(View.GONE);
@@ -119,7 +142,7 @@ public class SimulateGroupStage extends AppCompatActivity {
     public void NextMatch(View view){
         Button Simulate = findViewById(R.id.simulate);
         Simulate.setVisibility(View.GONE);
-        if(index > max_index + 1){
+        if(index > max_index){
             Button goBackToTable = findViewById(R.id.toTable);
             goBackToTable.setVisibility(View.VISIBLE);
         }
@@ -132,7 +155,7 @@ public class SimulateGroupStage extends AppCompatActivity {
         Gson gson = new Gson();
         Intent i = new Intent(this, GroupsActivity.class);
         i.putExtra("ChosenTeam", chosenTeam);
-        i.putExtra("ChosenTeamMatches", gson.toJson(chosenTeamMatches));
+        i.putExtra("ChosenTeamMatches", gson.toJson(playedMatches));
         i.putExtra("Completed", "true");
         startActivity(i);
     }
