@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wojewnikkoniecko.smprojekt.Models.Match;
 import com.wojewnikkoniecko.smprojekt.Models.MatchResult;
 import com.wojewnikkoniecko.smprojekt.Models.Statistics;
@@ -16,6 +17,7 @@ import com.wojewnikkoniecko.smprojekt.Models.Team;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +44,9 @@ public class GroupsActivity extends AppCompatActivity {
         chosenTeam = getIntent().getStringExtra("ChosenTeam");
         String json = getIntent().getStringExtra("ChosenTeamMatches");
         if (json != null && !json.isEmpty()) {
-            results = gson.fromJson(json, List.class);
+            Type listType = new TypeToken<ArrayList<MatchResult>>() {
+            }.getType();
+            results = gson.fromJson(json, listType);
             int index = 1;
             int groupIndex = 1;
             ArrayList<Statistics> stats = new ArrayList<>();
@@ -78,17 +82,17 @@ public class GroupsActivity extends AppCompatActivity {
                     } else if (team.equals(match.Away)) {
                         for (MatchResult result : results) {
                             if (result.MatchId == match.MatchId) {
-                                if (!result.isHomeWinner) {
-                                    //win
-                                    statistics.points += 3;
-                                    statistics.wins += 1;
-                                    statistics.goalsScored += result.awayGoals;
-                                    statistics.goalsLost += result.homeGoals;
-                                    statistics.goalOutcome = statistics.goalsScored - statistics.goalsLost;
-                                } else if (result.isDraw) {
+                                if (result.isDraw) {
                                     //remis
                                     statistics.points += 1;
                                     statistics.draws += 1;
+                                    statistics.goalsScored += result.awayGoals;
+                                    statistics.goalsLost += result.homeGoals;
+                                    statistics.goalOutcome = statistics.goalsScored - statistics.goalsLost;
+                                } else if (!result.isHomeWinner) {
+                                    //win
+                                    statistics.points += 3;
+                                    statistics.wins += 1;
                                     statistics.goalsScored += result.awayGoals;
                                     statistics.goalsLost += result.homeGoals;
                                     statistics.goalOutcome = statistics.goalsScored - statistics.goalsLost;
@@ -102,28 +106,28 @@ public class GroupsActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    stats.add(statistics);
                 }
+                stats.add(statistics);
                 index++;
-                if (index > 5) {
-                    index = 0;
+                if (index > 4) {
+                    index = 1;
                     teamsStats.put(groupIndex, stats);
                     stats = new ArrayList<>();
                     groupIndex++;
                 }
+
             }
         } else {
             //tu ma byc wszędzie po 0
         }
         List<Team> allTeams = databaseManager.getTeams();
-        if(results != null){
+        if (results != null) {
             for (Team item : allTeams) {
                 if (chosenTeam.equals(item.TeamName)) {
                     yourTeam = item;
                 }
             }
-        }
-        else{
+        } else {
             ArrayList<String> listOld = new ArrayList<>();
             int i = 0;
             int group = 1;
@@ -145,8 +149,6 @@ public class GroupsActivity extends AppCompatActivity {
         }
 
 
-
-
     }
 
     public void loadChoosingTeam(View view) {
@@ -158,7 +160,7 @@ public class GroupsActivity extends AppCompatActivity {
         TextView team2 = findViewById(R.id.team2);
         TextView team3 = findViewById(R.id.team3);
         TextView team4 = findViewById(R.id.team4);
-        if(results != null){
+        if (results != null) {
 
             ArrayList<Statistics> list = teamsStats.get(group);
             team1 = findViewById(R.id.team1);
@@ -248,8 +250,7 @@ public class GroupsActivity extends AppCompatActivity {
             } else if (list.get(3).teamName.equals(chosenTeam)) {
                 team4.setTextColor(Color.RED);
             }
-        }
-        else{
+        } else {
             ArrayList<String> listOld = teams.get(group);
             TextView groupText = findViewById(R.id.GroupName);
             groupText.setText("Grupa " + groupsNames[group - 1]);
