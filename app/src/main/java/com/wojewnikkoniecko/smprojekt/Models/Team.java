@@ -1,4 +1,4 @@
-package com.wojewnikkoniecko.smprojekt;
+package com.wojewnikkoniecko.smprojekt.Models;
 
 public class Team {
     public int TeamID;

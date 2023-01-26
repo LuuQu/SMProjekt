@@ -1,36 +1,22 @@
 package com.wojewnikkoniecko.smprojekt;
 
-import static com.android.volley.Request.*;
 import static com.android.volley.toolbox.Volley.newRequestQueue;
 
-import android.annotation.SuppressLint;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.*;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.StringRequest;
+import com.wojewnikkoniecko.smprojekt.Models.Team;
 
-import org.w3c.dom.Text;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class TeamActivity extends AppCompatActivity {
     EditText editTeamID;
