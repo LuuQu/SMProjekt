@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.wojewnikkoniecko.smprojekt.Models.Team;
+
 public class EditTeamActivity extends AppCompatActivity {
     DatabaseManager databaseManager = new DatabaseManager(this);
     TextView name,group;

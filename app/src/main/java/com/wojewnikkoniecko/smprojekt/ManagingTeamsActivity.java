@@ -12,6 +12,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wojewnikkoniecko.smprojekt.Models.Team;
+
 import java.util.ArrayList;
 
 public class ManagingTeamsActivity extends AppCompatActivity {

@@ -6,19 +6,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+import com.wojewnikkoniecko.smprojekt.Models.Team;
 
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+    DatabaseManager databaseManager = new DatabaseManager(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Intent intent = new Intent(MainActivity.this, TeamActivity.class);
-        //loadFromDbToMemory();
-        //startActivity(intent);
+        databaseManager.GetAllTeams();
+        loadTeams();
     }
-    private void loadFromDbToMemory() {
-        //OldSQLiteManager sqLiteManager = OldSQLiteManager.instanceOfDatabase(this);
-        //sqLiteManager.populateTeamListArray();
+    public void loadTeams() {
+        if(Team.teamArrayList.size() == 0) {
+            databaseManager.SetTeams();
+        }
     }
     public void newGame(View view) {
         Intent i = new Intent(this, ChoosingTeamActivity.class);

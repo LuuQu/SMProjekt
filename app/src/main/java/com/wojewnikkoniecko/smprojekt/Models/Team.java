@@ -1,4 +1,4 @@
-package com.wojewnikkoniecko.smprojekt;
+package com.wojewnikkoniecko.smprojekt.Models;
 
 import java.util.ArrayList;
 
