@@ -2,12 +2,15 @@ package com.wojewnikkoniecko.smprojekt;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.wojewnikkoniecko.smprojekt.Models.Match;
 import com.wojewnikkoniecko.smprojekt.Models.MatchResult;
 import com.wojewnikkoniecko.smprojekt.Models.Team;
@@ -31,11 +34,14 @@ public class SimulateGroupStage extends AppCompatActivity {
     int max_index = 0;
     Button Simulate;
     int index = 0;
+    boolean isLoaded = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simulate_group_stage);
         DisplayData();
+        Button goBackToTable = findViewById(R.id.toTable);
+        goBackToTable.setVisibility(View.GONE);
     }
     public void DisplayData(){
         TextView Home;
@@ -51,12 +57,17 @@ public class SimulateGroupStage extends AppCompatActivity {
         placeInGroup = getIntent().getStringExtra("Group");
         String[] tmp = placeInGroup.split("");
         group = tmp[0];
-        for(Match item : matches){
-            if(item.Home.equals(placeInGroup) || item.Away.equals(placeInGroup)){
-                chosenTeamMatches.add(item);
+        if(!isLoaded){
+            for(Match item : matches){
+                if(item.Home.equals(placeInGroup) || item.Away.equals(placeInGroup)){
+                    chosenTeamMatches.add(item);
+                }
             }
+            isLoaded = true;
         }
+
         nextMatch = chosenTeamMatches.get(index);
+        max_index = chosenTeamMatches.size() / 2;
         Home = findViewById(R.id.homeTeam);
         Away = findViewById(R.id.awayTeam);
         String TeamNameHome = null;
@@ -103,12 +114,27 @@ public class SimulateGroupStage extends AppCompatActivity {
         homeGoalsText.setText(String.valueOf(result.homeGoals));
         awayGoalsText.setVisibility(View.VISIBLE);
         awayGoalsText.setText(String.valueOf(result.awayGoals));
+        index++;
     }
     public void NextMatch(View view){
         Button Simulate = findViewById(R.id.simulate);
-        Simulate.setVisibility(View.VISIBLE);
-        index++;
-        DisplayData();
+        Simulate.setVisibility(View.GONE);
+        if(index > max_index + 1){
+            Button goBackToTable = findViewById(R.id.toTable);
+            goBackToTable.setVisibility(View.VISIBLE);
+        }
+        else{
+            Simulate.setVisibility(View.VISIBLE);
+            DisplayData();
+        }
+    }
+    public void GoBackToTableView(View view){
+        Gson gson = new Gson();
+        Intent i = new Intent(this, GroupsActivity.class);
+        i.putExtra("ChosenTeam", chosenTeam);
+        i.putExtra("ChosenTeamMatches", gson.toJson(chosenTeamMatches));
+        i.putExtra("Completed", "true");
+        startActivity(i);
     }
 
 

@@ -1,6 +1,5 @@
 package com.wojewnikkoniecko.smprojekt;
 
-import static com.android.volley.toolbox.Volley.newRequestQueue;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +30,6 @@ public class TeamActivity extends AppCompatActivity {
     Boolean UpdatePassed = false;
     Boolean DeletePassed = false;
     public DatabaseManager dbManager;
-    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

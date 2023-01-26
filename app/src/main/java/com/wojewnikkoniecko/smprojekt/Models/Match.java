@@ -1,6 +1,6 @@
 package com.wojewnikkoniecko.smprojekt.Models;
 
-public class Match {
+public class Match{
     public int MatchId;
     public String Home;
     public String Away;

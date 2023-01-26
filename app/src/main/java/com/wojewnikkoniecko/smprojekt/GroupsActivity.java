@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.wojewnikkoniecko.smprojekt.Models.Match;
 import com.wojewnikkoniecko.smprojekt.Models.Team;
 
 import org.w3c.dom.Text;
@@ -18,7 +20,6 @@ import java.util.List;
 
 public class GroupsActivity extends AppCompatActivity {
 
-    //List<String> teams = new ArrayList<>();
     HashMap<Integer, ArrayList<String>> teams = new HashMap<Integer, ArrayList<String>>();
     String[] groupsNames = {"A", "B", "C", "D", "E", "F", "G", "H"};
     int[] groups = {1, 2, 3, 4, 5, 6, 7, 8};
@@ -26,12 +27,19 @@ public class GroupsActivity extends AppCompatActivity {
     String chosenTeam;
     DatabaseManager databaseManager = new DatabaseManager();
     Team yourTeam;
+    List<Match> chosenTeamMatches = new ArrayList<>();
+    Gson gson = new Gson();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
         chosenTeam = getIntent().getStringExtra("ChosenTeam");
+        String json = getIntent().getStringExtra("ChosenTeamMatches");
+        if (json != null && !json.isEmpty()) {
+            chosenTeamMatches = gson.fromJson(json, List.class);
+        }
+
         List<Team> allTeams = databaseManager.getTeams();
         ArrayList<String> list = new ArrayList<>();
         int i = 0;
