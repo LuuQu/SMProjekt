@@ -66,20 +66,37 @@ public class SimulateGroupStage extends AppCompatActivity {
             }
             isLoaded = true;
         }*/
-
-        nextMatch = matches.get(index);
-        //max_index = playedMatches.size() / 2;
         Home = findViewById(R.id.homeTeam);
         Away = findViewById(R.id.awayTeam);
-        String TeamNameHome = null;
-        String TeamNameAway = null;
-        for(Team item : teams){
-            if(item.Group.equals(nextMatch.Home)){
-                TeamNameHome = item.TeamName;
-            } else if(item.Group.equals(nextMatch.Away)){
-                TeamNameAway = item.TeamName;
+        if(index <= max_index){
+            nextMatch = matches.get(index);
+            String TeamNameHome = null;
+            String TeamNameAway = null;
+            for(Team item : teams){
+                if(item.Group.equals(nextMatch.Home)){
+                    TeamNameHome = item.TeamName;
+                } else if(item.Group.equals(nextMatch.Away)){
+                    TeamNameAway = item.TeamName;
+                }
             }
+
+            Home.setText(TeamNameHome);
+            Away.setText(TeamNameAway);
+            homeGoalsText.setVisibility(View.GONE);
+            awayGoalsText.setVisibility(View.GONE);
+            Button next = findViewById(R.id.nextMatch);
+            next.setVisibility(View.GONE);
         }
+        else{
+            homeGoalsText.setVisibility(View.GONE);
+            awayGoalsText.setVisibility(View.GONE);
+            Home.setVisibility(View.GONE);
+            Away.setVisibility(View.GONE);
+            TextView versus = findViewById(R.id.versus);
+            versus.setVisibility(View.GONE);
+        }
+
+
         StringBuilder sb = new StringBuilder();
         for (MatchResult item : results) {
             for(Match match : matches){
@@ -102,12 +119,7 @@ public class SimulateGroupStage extends AppCompatActivity {
         scrollView.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 100);
         TextView textbox = findViewById(R.id.text_box);;
         textbox.setText(sb.toString());
-        Home.setText(TeamNameHome);
-        Away.setText(TeamNameAway);
-        homeGoalsText.setVisibility(View.GONE);
-        awayGoalsText.setVisibility(View.GONE);
-        Button next = findViewById(R.id.nextMatch);
-        next.setVisibility(View.GONE);
+
     }
     public void SimulateMatch(View view){
         Button Simulate = findViewById(R.id.simulate);
@@ -117,7 +129,8 @@ public class SimulateGroupStage extends AppCompatActivity {
         TextView homeGoalsText = findViewById(R.id.homeGoals);
         TextView awayGoalsText = findViewById(R.id.awayGoals);
         Random rand = new Random();
-        boolean isHomeWinner;
+        boolean isHomeWinner = false;
+        boolean isDraw = false;
         int homeOpportunities = rand.nextInt(7);
         int awayOpportunities = rand.nextInt(7);
         double homeLuck = rand.nextInt(100) * 0.01;
@@ -127,11 +140,14 @@ public class SimulateGroupStage extends AppCompatActivity {
         if(homeGoals > awayGoals){
             isHomeWinner = true;
         }
-        else{
+        else if (homeGoals > awayGoals){
             isHomeWinner = false;
         }
+        else{
+            isDraw = true;
+        }
         Simulate.setVisibility(View.GONE);
-        MatchResult result = new MatchResult(nextMatch.MatchId, homeGoals, awayGoals,isHomeWinner);
+        MatchResult result = new MatchResult(nextMatch.MatchId, homeGoals, awayGoals, isHomeWinner, isDraw, homeOpportunities, awayOpportunities);
         results.add(result);
         homeGoalsText.setVisibility(View.VISIBLE);
         homeGoalsText.setText(String.valueOf(result.homeGoals));
@@ -142,7 +158,7 @@ public class SimulateGroupStage extends AppCompatActivity {
     public void NextMatch(View view){
         Button Simulate = findViewById(R.id.simulate);
         Simulate.setVisibility(View.GONE);
-        if(index > max_index){
+        if(index == max_index){
             Button goBackToTable = findViewById(R.id.toTable);
             goBackToTable.setVisibility(View.VISIBLE);
         }
@@ -155,7 +171,7 @@ public class SimulateGroupStage extends AppCompatActivity {
         Gson gson = new Gson();
         Intent i = new Intent(this, GroupsActivity.class);
         i.putExtra("ChosenTeam", chosenTeam);
-        i.putExtra("ChosenTeamMatches", gson.toJson(playedMatches));
+        i.putExtra("ChosenTeamMatches", gson.toJson(results));
         i.putExtra("Completed", "true");
         startActivity(i);
     }
