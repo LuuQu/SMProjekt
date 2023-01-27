@@ -268,9 +268,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
     public void UpdateMatch(Match match) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "UPDATE " + TABLE_MATCH_NAME + " SET " + MATCH_RESULT_TEAM_A + " = '"
-                + match.getResultHome() + "', " + MATCH_RESULT_TEAM_B + " = '" + match.getResultAway() +
-                "' WHERE " + MATCH_TEAM_A + " = " + match.getHome() + ", " + MATCH_TEAM_A + " = " + match.getAway();
+        String queryString = "UPDATE " + TABLE_MATCH_NAME + " SET " + MATCH_RESULT_TEAM_A + " = "
+                + match.getResultHome() + ", " + MATCH_RESULT_TEAM_B + " = " + match.getResultAway() +
+                " WHERE " + MATCH_ID + " = " + match.getMatchId() + ";";
         db.execSQL(queryString);
 
     }
