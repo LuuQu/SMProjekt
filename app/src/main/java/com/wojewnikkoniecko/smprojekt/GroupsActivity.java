@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wojewnikkoniecko.smprojekt.Models.Match;
-import com.wojewnikkoniecko.smprojekt.Models.MatchResult;
 import com.wojewnikkoniecko.smprojekt.Models.Statistics;
 import com.wojewnikkoniecko.smprojekt.Models.Team;
 
@@ -34,135 +33,119 @@ public class GroupsActivity extends AppCompatActivity {
     List<Team> teamList;
     List<Match> matchesList;
     Team yourTeam;
-    List<MatchResult> results = new ArrayList<>();
     Gson gson = new Gson();
-
+    Boolean isSimulated = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         teamList = databaseManager.GetAllTeams();
         setContentView(R.layout.activity_groups);
-        matchesList = databaseManager.getMatches();
+        matchesList = databaseManager.GetAllMatches();
         chosenTeam = getIntent().getStringExtra("ChosenTeam");
         String json = getIntent().getStringExtra("ChosenTeamMatches");
-        if (json != null && !json.isEmpty()) {
-            Type listType = new TypeToken<ArrayList<MatchResult>>() {
-            }.getType();
-            results = gson.fromJson(json, listType);
-            int index = 1;
-            int groupIndex = 1;
-            ArrayList<Statistics> stats = new ArrayList<>();
-            for (Team team : teamList) {
-                Statistics statistics = new Statistics(team.getName(), 0, 0, 0, 0, 0, 0, 0);
-                for (Match match : matchesList) {
-                    if (team.equals(match.getHome())) {
-                        for (MatchResult result : results) {
-                            if (result.MatchId == match.getMatchId()) {
-                                if (result.isHomeWinner) {
-                                    //win
-                                    statistics.points += 3;
-                                    statistics.wins += 1;
-                                    statistics.goalsScored += result.homeGoals;
-                                    statistics.goalsLost += result.awayGoals;
-                                    statistics.goalOutcome = statistics.goalsScored - statistics.goalsLost;
-                                } else if (result.isDraw) {
-                                    //remis
-                                    statistics.points += 1;
-                                    statistics.draws += 1;
-                                    statistics.goalsScored += result.homeGoals;
-                                    statistics.goalsLost += result.awayGoals;
-                                    statistics.goalOutcome = statistics.goalsScored - statistics.goalsLost;
-                                } else {
-                                    //loss
-                                    statistics.loses += 1;
-                                    statistics.goalsScored += result.homeGoals;
-                                    statistics.goalsLost += result.awayGoals;
-                                    statistics.goalOutcome = statistics.goalsScored - statistics.goalsLost;
-                                }
-                            }
-                        }
-                    } else if (team.equals(match.getAway())) {
-                        for (MatchResult result : results) {
-                            if (result.MatchId == match.getMatchId()) {
-                                if (result.isDraw) {
-                                    //remis
-                                    statistics.points += 1;
-                                    statistics.draws += 1;
-                                    statistics.goalsScored += result.awayGoals;
-                                    statistics.goalsLost += result.homeGoals;
-                                    statistics.goalOutcome = statistics.goalsScored - statistics.goalsLost;
-                                } else if (!result.isHomeWinner) {
-                                    //win
-                                    statistics.points += 3;
-                                    statistics.wins += 1;
-                                    statistics.goalsScored += result.awayGoals;
-                                    statistics.goalsLost += result.homeGoals;
-                                    statistics.goalOutcome = statistics.goalsScored - statistics.goalsLost;
-                                } else {
-                                    //loss
-                                    statistics.loses += 1;
-                                    statistics.goalsScored += result.awayGoals;
-                                    statistics.goalsLost += result.homeGoals;
-                                    statistics.goalOutcome = statistics.goalsScored - statistics.goalsLost;
-                                }
-                            }
-                        }
-                    }
-                }
-                stats.add(statistics);
-                index++;
-                if (index > 4) {
-                    index = 1;
-                    teamsStats.put(groupIndex, stats);
-                    stats = new ArrayList<>();
-                    groupIndex++;
-                }
+        if (matchesList.get(0).getResultHome() != -1) {
 
-            }
-        } else {
-            //tu ma byc wszędzie po 0
         }
-        List<Team> allTeams = databaseManager.GetAllTeams();
-        if (results != null) {
-            for (Team item : allTeams) {
-                if (chosenTeam.equals(item.getName())) {
-                    yourTeam = item;
-                }
+        ArrayList<String> listOld = new ArrayList<>();
+        int i = 0;
+        int group = 1;
+        for (Team item : teamList) {
+            listOld.add(item.getName());
+            if (chosenTeam.equals(item.getName())) {
+                yourTeam = item;
             }
-        } else {
-            ArrayList<String> listOld = new ArrayList<>();
-            int i = 0;
-            int group = 1;
-            for (Team item : allTeams) {
-                listOld.add(item.getName());
-                if (chosenTeam.equals(item.getName())) {
-                    yourTeam = item;
-                }
-                if (i == 3) {
-                    i = 0;
-                    teams.put(group, listOld);
-                    listOld = new ArrayList<>();
-                    group++;
-                } else {
-                    i++;
-                }
+            if (i == 3) {
+                i = 0;
+                teams.put(group, listOld);
+                listOld = new ArrayList<>();
+                group++;
+            } else {
+                i++;
             }
-            int x = i * 2;
         }
+        int x = i * 2;
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        matchesList = databaseManager.GetAllMatches();
+        IsSimulated();
     }
 
     public void loadChoosingTeam(View view) {
         finish();
     }
-
+    public void IsSimulated(){
+        int index = 1;
+        int groupIndex = 1;
+        ArrayList<Statistics> stats = new ArrayList<>();
+        for (Team team : teamList) {
+            Statistics statistics = new Statistics();
+            statistics.setTeamName(team.getName());
+            for (Match match : matchesList) {
+                if (team.getGroup().equals(match.getHome())) {
+                    if (match.getResultHome() > match.getResultAway()) {
+                        //win
+                        statistics.setPoints(statistics.getPoints() + 3);
+                        statistics.setWins(statistics.getWins() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultHome());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultAway());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    } else if (match.getResultHome() == match.getResultAway()) {
+                        //remis
+                        statistics.setPoints(statistics.getPoints() + 1);
+                        statistics.setDraws(statistics.getDraws() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultHome());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultAway());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    } else {
+                        //loss
+                        statistics.setLoses(statistics.getLoses() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultHome());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultAway());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    }
+                } else if (team.getGroup().equals(match.getAway())) {
+                    if (match.getResultHome() == match.getResultAway()) {
+                        //remis
+                        statistics.setPoints(statistics.getPoints() + 1);
+                        statistics.setDraws(statistics.getDraws() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultAway());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultHome());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    } else if (match.getResultHome() < match.getResultAway()) {
+                        //win
+                        statistics.setPoints(statistics.getPoints() + 3);
+                        statistics.setWins(statistics.getWins() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultAway());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultHome());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    } else {
+                        //loss
+                        statistics.setLoses(statistics.getLoses() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultAway());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultHome());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    }
+                }
+            }
+            stats.add(statistics);
+            index++;
+            if (index > 4) {
+                index = 1;
+                teamsStats.put(groupIndex, stats);
+                stats = new ArrayList<>();
+                groupIndex++;
+            }
+        }
+    }
     public void SetTeams(int group) {
         TextView team1 = findViewById(R.id.team1);
         TextView team2 = findViewById(R.id.team2);
         TextView team3 = findViewById(R.id.team3);
         TextView team4 = findViewById(R.id.team4);
-        if (results != null) {
+        if (isSimulated == true) {
 
             ArrayList<Statistics> list = teamsStats.get(group);
             team1 = findViewById(R.id.team1);
@@ -172,84 +155,84 @@ public class GroupsActivity extends AppCompatActivity {
             TextView groupText = findViewById(R.id.GroupName);
 
             TextView points1 = findViewById(R.id.points1);
-            points1.setText(String.valueOf(list.get(0).points));
+            points1.setText(String.valueOf(list.get(0).getPoints()));
             TextView points2 = findViewById(R.id.points2);
-            points2.setText(String.valueOf(list.get(1).points));
+            points2.setText(String.valueOf(list.get(1).getPoints()));
             TextView points3 = findViewById(R.id.points3);
-            points3.setText(String.valueOf(list.get(2).points));
+            points3.setText(String.valueOf(list.get(2).getPoints()));
             TextView points4 = findViewById(R.id.points4);
-            points4.setText(String.valueOf(list.get(3).points));
+            points4.setText(String.valueOf(list.get(3).getPoints()));
 
             TextView wins1 = findViewById(R.id.wins1);
-            wins1.setText(String.valueOf(list.get(0).wins));
+            wins1.setText(String.valueOf(list.get(0).getWins()));
             TextView wins2 = findViewById(R.id.wins2);
-            wins2.setText(String.valueOf(list.get(1).wins));
+            wins2.setText(String.valueOf(list.get(1).getWins()));
             TextView wins3 = findViewById(R.id.wins3);
-            wins3.setText(String.valueOf(list.get(2).wins));
+            wins3.setText(String.valueOf(list.get(2).getWins()));
             TextView wins4 = findViewById(R.id.wins4);
-            wins4.setText(String.valueOf(list.get(3).wins));
+            wins4.setText(String.valueOf(list.get(3).getWins()));
 
             TextView ties1 = findViewById(R.id.ties1);
-            ties1.setText(String.valueOf(list.get(0).draws));
+            ties1.setText(String.valueOf(list.get(0).getDraws()));
             TextView ties2 = findViewById(R.id.ties2);
-            ties2.setText(String.valueOf(list.get(1).draws));
+            ties2.setText(String.valueOf(list.get(1).getDraws()));
             TextView ties3 = findViewById(R.id.ties3);
-            ties3.setText(String.valueOf(list.get(2).draws));
+            ties3.setText(String.valueOf(list.get(2).getDraws()));
             TextView ties4 = findViewById(R.id.ties4);
-            ties4.setText(String.valueOf(list.get(3).draws));
+            ties4.setText(String.valueOf(list.get(3).getDraws()));
 
             TextView loss1 = findViewById(R.id.loss1);
-            loss1.setText(String.valueOf(list.get(0).loses));
+            loss1.setText(String.valueOf(list.get(0).getLoses()));
             TextView loss2 = findViewById(R.id.loss2);
-            loss2.setText(String.valueOf(list.get(1).loses));
+            loss2.setText(String.valueOf(list.get(1).getLoses()));
             TextView loss3 = findViewById(R.id.loss3);
-            loss3.setText(String.valueOf(list.get(2).loses));
+            loss3.setText(String.valueOf(list.get(2).getLoses()));
             TextView loss4 = findViewById(R.id.loss4);
-            loss4.setText(String.valueOf(list.get(3).loses));
+            loss4.setText(String.valueOf(list.get(3).getLoses()));
 
             TextView goalScored1 = findViewById(R.id.goalScored1);
-            goalScored1.setText(String.valueOf(list.get(0).goalsScored));
+            goalScored1.setText(String.valueOf(list.get(0).getGoalsScored()));
             TextView goalScored2 = findViewById(R.id.goalScored2);
-            goalScored2.setText(String.valueOf(list.get(1).goalsScored));
+            goalScored2.setText(String.valueOf(list.get(1).getGoalsScored()));
             TextView goalScored3 = findViewById(R.id.goalScored3);
-            goalScored3.setText(String.valueOf(list.get(2).goalsScored));
+            goalScored3.setText(String.valueOf(list.get(2).getGoalsScored()));
             TextView goalScored4 = findViewById(R.id.goalScored4);
-            goalScored4.setText(String.valueOf(list.get(3).goalsScored));
+            goalScored4.setText(String.valueOf(list.get(3).getGoalsScored()));
 
             TextView goalConceded1 = findViewById(R.id.goalConceded1);
-            goalConceded1.setText(String.valueOf(list.get(0).goalsLost));
+            goalConceded1.setText(String.valueOf(list.get(0).getGoalsLost()));
             TextView goalConceded2 = findViewById(R.id.goalConceded2);
-            goalConceded2.setText(String.valueOf(list.get(1).goalsLost));
+            goalConceded2.setText(String.valueOf(list.get(1).getGoalsLost()));
             TextView goalConceded3 = findViewById(R.id.goalConceded3);
-            goalConceded3.setText(String.valueOf(list.get(2).goalsLost));
+            goalConceded3.setText(String.valueOf(list.get(2).getGoalsLost()));
             TextView goalConceded4 = findViewById(R.id.goalConceded4);
-            goalConceded4.setText(String.valueOf(list.get(3).goalsLost));
+            goalConceded4.setText(String.valueOf(list.get(3).getGoalsLost()));
 
             TextView goalDifference1 = findViewById(R.id.goalDifference1);
-            goalDifference1.setText(String.valueOf(list.get(0).goalOutcome));
+            goalDifference1.setText(String.valueOf(list.get(0).getGoalOutcome()));
             TextView goalDifference2 = findViewById(R.id.goalDifference2);
-            goalDifference2.setText(String.valueOf(list.get(1).goalOutcome));
+            goalDifference2.setText(String.valueOf(list.get(1).getGoalOutcome()));
             TextView goalDifference3 = findViewById(R.id.goalDifference3);
-            goalDifference3.setText(String.valueOf(list.get(2).goalOutcome));
+            goalDifference3.setText(String.valueOf(list.get(2).getGoalOutcome()));
             TextView goalDifference4 = findViewById(R.id.goalDifference4);
-            goalDifference4.setText(String.valueOf(list.get(3).goalOutcome));
+            goalDifference4.setText(String.valueOf(list.get(3).getGoalOutcome()));
 
             groupText.setText("Grupa " + groupsNames[group - 1]);
-            team1.setText(list.get(0).teamName);
-            team2.setText(list.get(1).teamName);
-            team3.setText(list.get(2).teamName);
-            team4.setText(list.get(3).teamName);
+            team1.setText(list.get(0).getTeamName());
+            team2.setText(list.get(1).getTeamName());
+            team3.setText(list.get(2).getTeamName());
+            team4.setText(list.get(3).getTeamName());
             team1.setTextColor(Color.BLACK);
             team2.setTextColor(Color.BLACK);
             team3.setTextColor(Color.BLACK);
             team4.setTextColor(Color.BLACK);
-            if (list.get(0).teamName.equals(chosenTeam)) {
+            if (list.get(0).getTeamName().equals(chosenTeam)) {
                 team1.setTextColor(Color.RED);
-            } else if (list.get(1).teamName.equals(chosenTeam)) {
+            } else if (list.get(1).getTeamName().equals(chosenTeam)) {
                 team2.setTextColor(Color.RED);
-            } else if (list.get(2).teamName.equals(chosenTeam)) {
+            } else if (list.get(2).getTeamName().equals(chosenTeam)) {
                 team3.setTextColor(Color.RED);
-            } else if (list.get(3).teamName.equals(chosenTeam)) {
+            } else if (list.get(3).getTeamName().equals(chosenTeam)) {
                 team4.setTextColor(Color.RED);
             }
         } else {
@@ -300,6 +283,7 @@ public class GroupsActivity extends AppCompatActivity {
         Intent i = new Intent(this, SimulateGroupStage.class);
         i.putExtra("ChosenTeam", chosenTeam);
         i.putExtra("Group", yourTeam.getGroup());
+        isSimulated = true;
         startActivity(i);
     }
 }

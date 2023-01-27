@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.wojewnikkoniecko.smprojekt.Models.Match;
-import com.wojewnikkoniecko.smprojekt.Models.MatchResult;
 import com.wojewnikkoniecko.smprojekt.Models.Team;
 
 
@@ -27,17 +26,16 @@ import java.util.Random;
 public class SimulateGroupStage extends AppCompatActivity {
     List<Team> teams = new ArrayList<>();
     List<Match> matches = new ArrayList<>();
+    List<Match> results = new ArrayList<>();
     List<Match> playedMatches = new ArrayList<>();
-    List<MatchResult> results = new ArrayList<>();
     DatabaseManager databaseManager = new DatabaseManager(this);
     String chosenTeam;
-    String group;
-    String placeInGroup;
     Match nextMatch;
     int max_index = 48;
     Button Simulate;
     int index = 0;
     boolean isLoaded = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +44,8 @@ public class SimulateGroupStage extends AppCompatActivity {
         Button goBackToTable = findViewById(R.id.toTable);
         goBackToTable.setVisibility(View.GONE);
     }
-    public void DisplayData(){
+
+    public void DisplayData() {
         TextView Home;
         TextView homeGoalsText;
         TextView Away;
@@ -55,11 +54,7 @@ public class SimulateGroupStage extends AppCompatActivity {
         awayGoalsText = findViewById(R.id.awayGoals);
         Button Simulate = findViewById(R.id.simulate);
         teams = databaseManager.GetAllTeams();
-        matches = databaseManager.getMatches();
-        chosenTeam = getIntent().getStringExtra("ChosenTeam");
-        placeInGroup = getIntent().getStringExtra("Group");
-        String[] tmp = placeInGroup.split("");
-        group = tmp[0];
+        matches = databaseManager.GetAllMatches();
         /*if(!isLoaded){
             for(Match item : matches){
                 if(item.Home.equals(placeInGroup) || item.Away.equals(placeInGroup)){
@@ -70,14 +65,14 @@ public class SimulateGroupStage extends AppCompatActivity {
         }*/
         Home = findViewById(R.id.homeTeam);
         Away = findViewById(R.id.awayTeam);
-        if(index <= max_index){
+        if (index <= max_index) {
             nextMatch = matches.get(index);
             String TeamNameHome = null;
             String TeamNameAway = null;
-            for(Team item : teams){
-                if(item.getGroup().equals(nextMatch.getHome())){
+            for (Team item : teams) {
+                if (item.getGroup().equals(nextMatch.getHome())) {
                     TeamNameHome = item.getName();
-                } else if(item.getGroup().equals(nextMatch.getAway())){
+                } else if (item.getGroup().equals(nextMatch.getAway())) {
                     TeamNameAway = item.getName();
                 }
             }
@@ -88,8 +83,7 @@ public class SimulateGroupStage extends AppCompatActivity {
             awayGoalsText.setVisibility(View.GONE);
             Button next = findViewById(R.id.nextMatch);
             next.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             homeGoalsText.setVisibility(View.GONE);
             awayGoalsText.setVisibility(View.GONE);
             Home.setVisibility(View.GONE);
@@ -100,30 +94,28 @@ public class SimulateGroupStage extends AppCompatActivity {
 
 
         StringBuilder sb = new StringBuilder();
-        for (MatchResult item : results) {
-            for(Match match : matches){
-                if(item.MatchId == match.getMatchId()){
-                    String homeTeamName = "undefined";
-                    String awayTeamName = "undefined";
-                    for(Team team : teams){
-                        if(team.getGroup().equals(match.getHome())){
-                            homeTeamName = team.getName();
-                        } else if(team.getGroup().equals(match.getAway())){
-                            awayTeamName = team.getName();
-                        }
-                    }
-                    sb.append(homeTeamName + " " + item.homeGoals + " : " + item.awayGoals  + " " + awayTeamName);
+        for (Match item : results) {
+            String homeTeamName = "undefined";
+            String awayTeamName = "undefined";
+            for (Team team : teams) {
+                if (team.getGroup().equals(item.getHome())) {
+                    homeTeamName = team.getName();
+                } else if (team.getGroup().equals(item.getAway())) {
+                    awayTeamName = team.getName();
                 }
             }
+            sb.append(homeTeamName + " " + item.getResultHome() + " : " + item.getResultAway()  + " " + awayTeamName);
             sb.append("\n");
         }
         ScrollView scrollView = findViewById(R.id.scroll);
         scrollView.postDelayed(() -> scrollView.fullScroll(View.FOCUS_DOWN), 100);
-        TextView textbox = findViewById(R.id.text_box);;
+        TextView textbox = findViewById(R.id.text_box);
+        ;
         textbox.setText(sb.toString());
 
     }
-    public void SimulateMatch(View view){
+
+    public void SimulateMatch(View view) {
         Button Simulate = findViewById(R.id.simulate);
         Simulate.setVisibility(View.GONE);
         Button next = findViewById(R.id.nextMatch);
@@ -137,39 +129,43 @@ public class SimulateGroupStage extends AppCompatActivity {
         int awayOpportunities = rand.nextInt(7);
         double homeLuck = rand.nextInt(100) * 0.01;
         double awayLuck = rand.nextInt(100) * 0.01;
-        int homeGoals = (int)Math.round(homeOpportunities * homeLuck);
-        int awayGoals = (int)Math.round(awayOpportunities * awayLuck);
-        if(homeGoals > awayGoals){
+        int homeGoals = (int) Math.round(homeOpportunities * homeLuck);
+        int awayGoals = (int) Math.round(awayOpportunities * awayLuck);
+        if (homeGoals > awayGoals) {
             isHomeWinner = true;
-        }
-        else if (homeGoals > awayGoals){
+        } else if (homeGoals > awayGoals) {
             isHomeWinner = false;
-        }
-        else{
+        } else {
             isDraw = true;
         }
         Simulate.setVisibility(View.GONE);
-        MatchResult result = new MatchResult(nextMatch.getMatchId(), homeGoals, awayGoals, isHomeWinner, isDraw, homeOpportunities, awayOpportunities);
-        results.add(result);
+        results.add(new Match(nextMatch.getMatchId(),nextMatch.getHome(),nextMatch.getAway(),homeGoals,awayGoals));
         homeGoalsText.setVisibility(View.VISIBLE);
-        homeGoalsText.setText(String.valueOf(result.homeGoals));
+        homeGoalsText.setText(String.valueOf(homeGoals));
         awayGoalsText.setVisibility(View.VISIBLE);
-        awayGoalsText.setText(String.valueOf(result.awayGoals));
+        awayGoalsText.setText(String.valueOf(awayGoals));
         index++;
     }
-    public void NextMatch(View view){
+
+    public void NextMatch(View view) {
         Button Simulate = findViewById(R.id.simulate);
         Simulate.setVisibility(View.GONE);
-        if(index == max_index){
+        if (index == max_index) {
+            for(Match result : results){
+                databaseManager.UpdateMatch(result);
+            }
             Button goBackToTable = findViewById(R.id.toTable);
             goBackToTable.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             Simulate.setVisibility(View.VISIBLE);
             DisplayData();
         }
     }
-    public void GoBackToTableView(View view){
+
+    public void GoBackToTableView(View view) {
+        Intent i = new Intent();
+        i.putExtra("isSimulated", true);
+        setResult(RESULT_OK, i);
         finish();
 //        Gson gson = new Gson();
 //        Intent i = new Intent(this, GroupsActivity.class);
@@ -178,7 +174,6 @@ public class SimulateGroupStage extends AppCompatActivity {
 //        i.putExtra("Completed", "true");
 //        startActivity(i);
     }
-
 
 
 }

@@ -33,60 +33,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public DatabaseManager(Context context) {
         super(context, "WcDataBase", null, 1);
     }
-
-    public List<Match> getMatches(){
-        List<Match> matches = new ArrayList<>();
-        matches.add(new Match(1, "A1", "A2",-1,-1));
-        matches.add(new Match(2, "A3", "A4",-1,-1));
-        matches.add(new Match(3, "A1", "A3",-1,-1));
-        matches.add(new Match(4, "A4", "A2",-1,-1));
-        matches.add(new Match(5, "A2", "A3",-1,-1));
-        matches.add(new Match(6, "A4", "A1",-1,-1));
-        matches.add(new Match(7, "B1", "B2",-1,-1));
-        matches.add(new Match(8, "B3", "B4",-1,-1));
-        matches.add(new Match(9, "B1", "B3",-1,-1));
-        matches.add(new Match(10, "B4", "B2",-1,-1));
-        matches.add(new Match(11, "B2", "B3",-1,-1));
-        matches.add(new Match(12, "B4", "B1",-1,-1));
-        matches.add(new Match(13, "C1", "C2",-1,-1));
-        matches.add(new Match(14, "C3", "C4",-1,-1));
-        matches.add(new Match(15, "C1", "C3",-1,-1));
-        matches.add(new Match(16, "C4", "C2",-1,-1));
-        matches.add(new Match(17, "C2", "C3",-1,-1));
-        matches.add(new Match(18, "C4", "C1",-1,-1));
-        matches.add(new Match(19, "D1", "D2",-1,-1));
-        matches.add(new Match(20, "D3", "D4",-1,-1));
-        matches.add(new Match(21, "D1", "D3",-1,-1));
-        matches.add(new Match(22, "D4", "D2",-1,-1));
-        matches.add(new Match(23, "D2", "D3",-1,-1));
-        matches.add(new Match(24, "D4", "D1",-1,-1));
-        matches.add(new Match(25, "E1", "E2",-1,-1));
-        matches.add(new Match(26, "E3", "E4",-1,-1));
-        matches.add(new Match(27, "E1", "E3",-1,-1));
-        matches.add(new Match(28, "E4", "E2",-1,-1));
-        matches.add(new Match(29, "E2", "E3",-1,-1));
-        matches.add(new Match(30, "E4", "E1",-1,-1));
-        matches.add(new Match(31, "F1", "F2",-1,-1));
-        matches.add(new Match(32, "F3", "F4",-1,-1));
-        matches.add(new Match(33, "F1", "F3",-1,-1));
-        matches.add(new Match(34, "F4", "F2",-1,-1));
-        matches.add(new Match(35, "F2", "F3",-1,-1));
-        matches.add(new Match(36, "F4", "F1",-1,-1));
-        matches.add(new Match(37, "G1", "G2",-1,-1));
-        matches.add(new Match(38, "G3", "G4",-1,-1));
-        matches.add(new Match(39, "G1", "G3",-1,-1));
-        matches.add(new Match(40, "G4", "G2",-1,-1));
-        matches.add(new Match(41, "G2", "G3",-1,-1));
-        matches.add(new Match(42, "G4", "G1",-1,-1));
-        matches.add(new Match(43, "H1", "H2",-1,-1));
-        matches.add(new Match(44, "H3", "H4",-1,-1));
-        matches.add(new Match(45, "H1", "H3",-1,-1));
-        matches.add(new Match(46, "H4", "H2",-1,-1));
-        matches.add(new Match(47, "H2", "H3",-1,-1));
-        matches.add(new Match(48, "H4", "H1",-1,-1));
-        return matches;
-    }
-
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String teamStatement = "CREATE TABLE "+ TABLE_TEAM_NAME + " (" + TEAM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TEAM_GROUP + " TEXT, "+ TEAM_NAME + " TEXT)";
@@ -268,9 +214,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
     public void UpdateMatch(Match match) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String queryString = "UPDATE " + TABLE_MATCH_NAME + " SET " + MATCH_RESULT_TEAM_A + " = '"
-                + match.getResultHome() + "', " + MATCH_RESULT_TEAM_B + " = '" + match.getResultAway() +
-                "' WHERE " + MATCH_TEAM_A + " = " + match.getHome() + ", " + MATCH_TEAM_A + " = " + match.getAway();
+        String queryString = "UPDATE " + TABLE_MATCH_NAME + " SET " + MATCH_RESULT_TEAM_A + " = "
+                + match.getResultHome() + ", " + MATCH_RESULT_TEAM_B + " = " + match.getResultAway() +
+                " WHERE " + MATCH_ID + " = " + match.getMatchId() + ";";
         db.execSQL(queryString);
 
     }
