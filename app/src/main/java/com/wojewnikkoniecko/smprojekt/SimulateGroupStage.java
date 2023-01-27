@@ -106,9 +106,9 @@ public class SimulateGroupStage extends AppCompatActivity {
                     String homeTeamName = "undefined";
                     String awayTeamName = "undefined";
                     for(Team team : teams){
-                        if(team.getGroup().equals(match.getHomeId())){
+                        if(team.getGroup().equals(match.getHome())){
                             homeTeamName = team.getName();
-                        } else if(team.getGroup().equals(match.getAwayId())){
+                        } else if(team.getGroup().equals(match.getAway())){
                             awayTeamName = team.getName();
                         }
                     }

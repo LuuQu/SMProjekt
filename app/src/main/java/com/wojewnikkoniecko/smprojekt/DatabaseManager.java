@@ -5,11 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import java.util.Collections;
+import java.util.Comparator;
+import androidx.annotation.RequiresApi;
+import android.os.Build;
 
 import androidx.annotation.Nullable;
 
-import com.wojewnikkoniecko.smprojekt.Models.Match;
-import com.wojewnikkoniecko.smprojekt.Models.Team;
+import com.wojewnikkoniecko.smprojekt.Models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +30,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private final String MATCH_RESULT_TEAM_A = "HomeResult";
     private final String MATCH_RESULT_TEAM_B = "AwayResult";
     private final String MATCH_ID = "Id";
-    public DatabaseManager(@Nullable Context context) {
+    public DatabaseManager(Context context) {
         super(context, "WcDataBase", null, 1);
     }
 
@@ -90,7 +93,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
         String matchesStatement = "CREATE TABLE " + TABLE_MATCH_NAME +" (" + MATCH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                                     + MATCH_TEAM_A + " TEXT, " + MATCH_TEAM_B + " TEXT, "
                                     + MATCH_RESULT_TEAM_A + " INTEGER, " + MATCH_RESULT_TEAM_B + " INTEGER)";
-                                    ;
         sqLiteDatabase.execSQL(teamStatement);
         sqLiteDatabase.execSQL(matchesStatement);
     }
@@ -247,7 +249,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
     public ArrayList<Match> GetAllMatches() {
         ArrayList<Match> result = new ArrayList<Match>();
-        String querystring = "SELECT * FROM " + TABLE_TEAM_NAME;
+        String querystring = "SELECT * FROM " + TABLE_MATCH_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(querystring,null);
         if(cursor.moveToFirst()){
