@@ -163,6 +163,9 @@ public class SimulateGroupStage extends AppCompatActivity {
     }
 
     public void GoBackToTableView(View view) {
+        Intent i = new Intent();
+        i.putExtra("isSimulated", true);
+        setResult(RESULT_OK, i);
         finish();
 //        Gson gson = new Gson();
 //        Intent i = new Intent(this, GroupsActivity.class);

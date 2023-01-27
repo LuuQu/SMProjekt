@@ -34,7 +34,7 @@ public class GroupsActivity extends AppCompatActivity {
     List<Match> matchesList;
     Team yourTeam;
     Gson gson = new Gson();
-
+    Boolean isSimulated = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,68 +44,7 @@ public class GroupsActivity extends AppCompatActivity {
         chosenTeam = getIntent().getStringExtra("ChosenTeam");
         String json = getIntent().getStringExtra("ChosenTeamMatches");
         if (matchesList.get(0).getResultHome() != -1) {
-            int index = 1;
-            int groupIndex = 1;
-            ArrayList<Statistics> stats = new ArrayList<>();
-            for (Team team : teamList) {
-                Statistics statistics = new Statistics();
-                statistics.setTeamName(team.getName());
-                for (Match match : matchesList) {
-                    if (team.equals(match.getHome())) {
-                        if (match.getResultHome() > match.getResultAway()) {
-                            //win
-                            statistics.setPoints(statistics.getPoints() + 3);
-                            statistics.setWins(statistics.getWins() + 1);
-                            statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultHome());
-                            statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultAway());
-                            statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
-                        } else if (match.getResultHome() == match.getResultAway()) {
-                            //remis
-                            statistics.setPoints(statistics.getPoints() + 1);
-                            statistics.setDraws(statistics.getDraws() + 1);
-                            statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultHome());
-                            statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultAway());
-                            statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
-                        } else {
-                            //loss
-                            statistics.setLoses(statistics.getLoses() + 1);
-                            statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultHome());
-                            statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultAway());
-                            statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
-                        }
-                    } else if (team.equals(match.getAway())) {
-                        if (match.getResultHome() == match.getResultAway()) {
-                            //remis
-                            statistics.setPoints(statistics.getPoints() + 1);
-                            statistics.setDraws(statistics.getDraws() + 1);
-                            statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultAway());
-                            statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultHome());
-                            statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
-                        } else if (match.getResultHome() < match.getResultAway()) {
-                            //win
-                            statistics.setPoints(statistics.getPoints() + 3);
-                            statistics.setWins(statistics.getWins() + 1);
-                            statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultAway());
-                            statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultHome());
-                            statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
-                        } else {
-                            //loss
-                            statistics.setLoses(statistics.getLoses() + 1);
-                            statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultAway());
-                            statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultHome());
-                            statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
-                        }
-                    }
-                }
-                stats.add(statistics);
-                index++;
-                if (index > 4) {
-                    index = 1;
-                    teamsStats.put(groupIndex, stats);
-                    stats = new ArrayList<>();
-                    groupIndex++;
-                }
-            }
+
         }
         ArrayList<String> listOld = new ArrayList<>();
         int i = 0;
@@ -129,13 +68,80 @@ public class GroupsActivity extends AppCompatActivity {
     public void loadChoosingTeam(View view) {
         finish();
     }
-
+    public void IsSimulated(){
+        int index = 1;
+        int groupIndex = 1;
+        ArrayList<Statistics> stats = new ArrayList<>();
+        for (Team team : teamList) {
+            Statistics statistics = new Statistics();
+            statistics.setTeamName(team.getName());
+            for (Match match : matchesList) {
+                if (team.getGroup().equals(match.getHome())) {
+                    if (match.getResultHome() > match.getResultAway()) {
+                        //win
+                        statistics.setPoints(statistics.getPoints() + 3);
+                        statistics.setWins(statistics.getWins() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultHome());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultAway());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    } else if (match.getResultHome() == match.getResultAway()) {
+                        //remis
+                        statistics.setPoints(statistics.getPoints() + 1);
+                        statistics.setDraws(statistics.getDraws() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultHome());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultAway());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    } else {
+                        //loss
+                        statistics.setLoses(statistics.getLoses() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultHome());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultAway());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    }
+                } else if (team.getGroup().equals(match.getAway())) {
+                    if (match.getResultHome() == match.getResultAway()) {
+                        //remis
+                        statistics.setPoints(statistics.getPoints() + 1);
+                        statistics.setDraws(statistics.getDraws() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultAway());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultHome());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    } else if (match.getResultHome() < match.getResultAway()) {
+                        //win
+                        statistics.setPoints(statistics.getPoints() + 3);
+                        statistics.setWins(statistics.getWins() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultAway());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultHome());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    } else {
+                        //loss
+                        statistics.setLoses(statistics.getLoses() + 1);
+                        statistics.setGoalsScored(statistics.getGoalsScored() + match.getResultAway());
+                        statistics.setGoalsLost(statistics.getGoalsLost() + match.getResultHome());
+                        statistics.setGoalOutcome(statistics.getGoalsScored() - statistics.getGoalsLost());
+                    }
+                }
+            }
+            stats.add(statistics);
+            index++;
+            if (index > 4) {
+                index = 1;
+                teamsStats.put(groupIndex, stats);
+                stats = new ArrayList<>();
+                groupIndex++;
+            }
+        }
+    }
     public void SetTeams(int group) {
+        if(isSimulated == true){
+            matchesList = databaseManager.getMatches();
+            IsSimulated();
+        }
         TextView team1 = findViewById(R.id.team1);
         TextView team2 = findViewById(R.id.team2);
         TextView team3 = findViewById(R.id.team3);
         TextView team4 = findViewById(R.id.team4);
-        if (matchesList.get(0).getResultHome() != -1) {
+        if (isSimulated == true) {
 
             ArrayList<Statistics> list = teamsStats.get(group);
             team1 = findViewById(R.id.team1);
@@ -273,6 +279,7 @@ public class GroupsActivity extends AppCompatActivity {
         Intent i = new Intent(this, SimulateGroupStage.class);
         i.putExtra("ChosenTeam", chosenTeam);
         i.putExtra("Group", yourTeam.getGroup());
+        isSimulated = true;
         startActivity(i);
     }
 }
