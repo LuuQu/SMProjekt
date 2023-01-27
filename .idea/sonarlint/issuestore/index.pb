@@ -24,7 +24,5 @@ Eapp/src/test/java/com/wojewnikkoniecko/smprojekt/ExampleUnitTest.java,f\a\faa8
 db.json,8\8\882a43610b9835dd51ca4ad37a0967fa0205e328
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
-w
-Gapp/src/main/java/com/wojewnikkoniecko/smprojekt/Models/Statistics.java,a\2\a2298ab5508b591eddb9d92822bec713ae6073c5
 ~
 Napp/src/main/java/com/wojewnikkoniecko/smprojekt/LoadPreviousSaveActivity.java,e\e\eed533aa27d34999577217f0fabe7e21e38a378a
