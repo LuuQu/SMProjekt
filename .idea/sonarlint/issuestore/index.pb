@@ -26,3 +26,9 @@ P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 ~
 Napp/src/main/java/com/wojewnikkoniecko/smprojekt/LoadPreviousSaveActivity.java,e\e\eed533aa27d34999577217f0fabe7e21e38a378a
+z
+Japp/src/main/java/com/wojewnikkoniecko/smprojekt/ChoosingTeamActivity.java,a\e\aeeceebc2dcddd4185e7cc0fef4f1d31f5289415
+v
+Fapp/src/main/java/com/wojewnikkoniecko/smprojekt/EditTeamActivity.java,4\6\4684e4cf2be4c8536fb0cb394e53ad973833a9fc
+{
+Kapp/src/main/java/com/wojewnikkoniecko/smprojekt/ManagingTeamsActivity.java,0\7\071249fabc384a1b99b68101a7bd05ebf341f50c

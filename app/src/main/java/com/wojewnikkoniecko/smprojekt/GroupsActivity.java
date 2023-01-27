@@ -40,7 +40,7 @@ public class GroupsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         teamList = databaseManager.GetAllTeams();
         setContentView(R.layout.activity_groups);
-        matchesList = databaseManager.getMatches();
+        matchesList = databaseManager.GetAllMatches();
         chosenTeam = getIntent().getStringExtra("ChosenTeam");
         String json = getIntent().getStringExtra("ChosenTeamMatches");
         if (matchesList.get(0).getResultHome() != -1) {
@@ -65,6 +65,14 @@ public class GroupsActivity extends AppCompatActivity {
         }
         int x = i * 2;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        matchesList = databaseManager.GetAllMatches();
+        IsSimulated();
+    }
+
     public void loadChoosingTeam(View view) {
         finish();
     }
@@ -133,10 +141,6 @@ public class GroupsActivity extends AppCompatActivity {
         }
     }
     public void SetTeams(int group) {
-        if(isSimulated == true){
-            matchesList = databaseManager.getMatches();
-            IsSimulated();
-        }
         TextView team1 = findViewById(R.id.team1);
         TextView team2 = findViewById(R.id.team2);
         TextView team3 = findViewById(R.id.team3);
