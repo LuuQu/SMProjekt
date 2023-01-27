@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.wojewnikkoniecko.smprojekt.Models.Match;
 import com.wojewnikkoniecko.smprojekt.Models.Team;
 
 import java.util.ArrayList;
@@ -18,11 +19,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         databaseManager.GetAllTeams();
-        loadTeams();
+        databaseManager.GetAllMatches();
+        loadTeamsAndMatches();
     }
-    public void loadTeams() {
+    public void loadTeamsAndMatches() {
         if(Team.teamArrayList.size() == 0) {
             databaseManager.SetTeams();
+        }
+        if(Match.matchArrayList.size() == 0) {
+            databaseManager.SetMatches();
         }
     }
     public void newGame(View view) {

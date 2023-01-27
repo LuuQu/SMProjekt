@@ -55,7 +55,7 @@ public class SimulateGroupStage extends AppCompatActivity {
         awayGoalsText = findViewById(R.id.awayGoals);
         Button Simulate = findViewById(R.id.simulate);
         teams = databaseManager.GetAllTeams();
-        //matches = databaseManager.getMatches();
+        matches = databaseManager.getMatches();
         chosenTeam = getIntent().getStringExtra("ChosenTeam");
         placeInGroup = getIntent().getStringExtra("Group");
         String[] tmp = placeInGroup.split("");
@@ -75,9 +75,9 @@ public class SimulateGroupStage extends AppCompatActivity {
             String TeamNameHome = null;
             String TeamNameAway = null;
             for(Team item : teams){
-                if(item.getGroup().equals(nextMatch.Home)){
+                if(item.getGroup().equals(nextMatch.getHome())){
                     TeamNameHome = item.getName();
-                } else if(item.getGroup().equals(nextMatch.Away)){
+                } else if(item.getGroup().equals(nextMatch.getAway())){
                     TeamNameAway = item.getName();
                 }
             }
@@ -102,13 +102,13 @@ public class SimulateGroupStage extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
         for (MatchResult item : results) {
             for(Match match : matches){
-                if(item.MatchId == match.MatchId){
+                if(item.MatchId == match.getMatchId()){
                     String homeTeamName = "undefined";
                     String awayTeamName = "undefined";
                     for(Team team : teams){
-                        if(team.getGroup().equals(match.Home)){
+                        if(team.getGroup().equals(match.getHomeId())){
                             homeTeamName = team.getName();
-                        } else if(team.getGroup().equals(match.Away)){
+                        } else if(team.getGroup().equals(match.getAwayId())){
                             awayTeamName = team.getName();
                         }
                     }
@@ -149,7 +149,7 @@ public class SimulateGroupStage extends AppCompatActivity {
             isDraw = true;
         }
         Simulate.setVisibility(View.GONE);
-        MatchResult result = new MatchResult(nextMatch.MatchId, homeGoals, awayGoals, isHomeWinner, isDraw, homeOpportunities, awayOpportunities);
+        MatchResult result = new MatchResult(nextMatch.getMatchId(), homeGoals, awayGoals, isHomeWinner, isDraw, homeOpportunities, awayOpportunities);
         results.add(result);
         homeGoalsText.setVisibility(View.VISIBLE);
         homeGoalsText.setText(String.valueOf(result.homeGoals));
@@ -170,12 +170,13 @@ public class SimulateGroupStage extends AppCompatActivity {
         }
     }
     public void GoBackToTableView(View view){
-        Gson gson = new Gson();
-        Intent i = new Intent(this, GroupsActivity.class);
-        i.putExtra("ChosenTeam", chosenTeam);
-        i.putExtra("ChosenTeamMatches", gson.toJson(results));
-        i.putExtra("Completed", "true");
-        startActivity(i);
+        finish();
+//        Gson gson = new Gson();
+//        Intent i = new Intent(this, GroupsActivity.class);
+//        i.putExtra("ChosenTeam", chosenTeam);
+//        i.putExtra("ChosenTeamMatches", gson.toJson(results));
+//        i.putExtra("Completed", "true");
+//        startActivity(i);
     }
 
 

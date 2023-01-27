@@ -31,8 +31,8 @@ public class GroupsActivity extends AppCompatActivity {
     int activeGroup = 1;
     String chosenTeam;
     DatabaseManager databaseManager = new DatabaseManager(this);
-    List<Team> teamList = databaseManager.GetAllTeams();
-    List<Match> matchesList = databaseManager.getMatches();
+    List<Team> teamList;
+    List<Match> matchesList;
     Team yourTeam;
     List<MatchResult> results = new ArrayList<>();
     Gson gson = new Gson();
@@ -40,7 +40,9 @@ public class GroupsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        teamList = databaseManager.GetAllTeams();
         setContentView(R.layout.activity_groups);
+        matchesList = databaseManager.getMatches();
         chosenTeam = getIntent().getStringExtra("ChosenTeam");
         String json = getIntent().getStringExtra("ChosenTeamMatches");
         if (json != null && !json.isEmpty()) {
@@ -53,9 +55,9 @@ public class GroupsActivity extends AppCompatActivity {
             for (Team team : teamList) {
                 Statistics statistics = new Statistics(team.getName(), 0, 0, 0, 0, 0, 0, 0);
                 for (Match match : matchesList) {
-                    if (team.equals(match.Home)) {
+                    if (team.equals(match.getHome())) {
                         for (MatchResult result : results) {
-                            if (result.MatchId == match.MatchId) {
+                            if (result.MatchId == match.getMatchId()) {
                                 if (result.isHomeWinner) {
                                     //win
                                     statistics.points += 3;
@@ -79,9 +81,9 @@ public class GroupsActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                    } else if (team.equals(match.Away)) {
+                    } else if (team.equals(match.getAway())) {
                         for (MatchResult result : results) {
-                            if (result.MatchId == match.MatchId) {
+                            if (result.MatchId == match.getMatchId()) {
                                 if (result.isDraw) {
                                     //remis
                                     statistics.points += 1;
