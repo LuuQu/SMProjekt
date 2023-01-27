@@ -151,6 +151,9 @@ public class SimulateGroupStage extends AppCompatActivity {
         Button Simulate = findViewById(R.id.simulate);
         Simulate.setVisibility(View.GONE);
         if (index == max_index) {
+            for(Match result : results){
+                databaseManager.UpdateMatch(result);
+            }
             Button goBackToTable = findViewById(R.id.toTable);
             goBackToTable.setVisibility(View.VISIBLE);
         } else {
