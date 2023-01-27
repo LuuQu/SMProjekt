@@ -6,14 +6,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+import com.wojewnikkoniecko.smprojekt.Models.Match;
+import com.wojewnikkoniecko.smprojekt.Models.Team;
 
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
+    DatabaseManager databaseManager = new DatabaseManager(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent = new Intent(MainActivity.this, TeamActivity.class);
-        //startActivity(intent);
+        databaseManager.GetAllTeams();
+        databaseManager.GetAllMatches();
+        loadTeamsAndMatches();
+    }
+    public void loadTeamsAndMatches() {
+        if(Team.teamArrayList.size() == 0) {
+            databaseManager.SetTeams();
+        }
+        if(Match.matchArrayList.size() == 0) {
+            databaseManager.SetMatches();
+        }
     }
     public void newGame(View view) {
         Intent i = new Intent(this, ChoosingTeamActivity.class);
@@ -25,5 +40,9 @@ public class MainActivity extends AppCompatActivity {
     }
     public void exit(View view) {
         System.exit(0);
+    }
+    public void teamActivity(View view) {
+        Intent i = new Intent(this, ManagingTeamsActivity.class);
+        startActivity(i);
     }
 }

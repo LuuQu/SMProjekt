@@ -27,14 +27,14 @@ public class ChoosingTeamActivity extends AppCompatActivity {
     List<String> teamsAdapter = new ArrayList<>();
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterItems;
-    DatabaseManager databaseManager = new DatabaseManager();
+    DatabaseManager databaseManager = new DatabaseManager(this);
     private String chosenteam = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        List<Team> teams = databaseManager.getTeams();
+        List<Team> teams = databaseManager.GetAllTeams();
         for(Team item : teams){
-            teamsAdapter.add(item.TeamName);
+            teamsAdapter.add(item.getName());
         }
         setContentView(R.layout.activity_choosing_team);
         autoCompleteTextView = findViewById(R.id.teams);

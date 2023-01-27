@@ -30,9 +30,9 @@ public class GroupsActivity extends AppCompatActivity {
     int[] groups = {1, 2, 3, 4, 5, 6, 7, 8};
     int activeGroup = 1;
     String chosenTeam;
-    DatabaseManager databaseManager = new DatabaseManager();
-    List<Team> teamList = databaseManager.getTeams();
-    List<Match> matchesList = databaseManager.getMatches();
+    DatabaseManager databaseManager = new DatabaseManager(this);
+    List<Team> teamList;
+    List<Match> matchesList;
     Team yourTeam;
     List<MatchResult> results = new ArrayList<>();
     Gson gson = new Gson();
@@ -40,7 +40,9 @@ public class GroupsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        teamList = databaseManager.GetAllTeams();
         setContentView(R.layout.activity_groups);
+        matchesList = databaseManager.getMatches();
         chosenTeam = getIntent().getStringExtra("ChosenTeam");
         String json = getIntent().getStringExtra("ChosenTeamMatches");
         if (json != null && !json.isEmpty()) {
@@ -51,11 +53,11 @@ public class GroupsActivity extends AppCompatActivity {
             int groupIndex = 1;
             ArrayList<Statistics> stats = new ArrayList<>();
             for (Team team : teamList) {
-                Statistics statistics = new Statistics(team.TeamName, 0, 0, 0, 0, 0, 0, 0);
+                Statistics statistics = new Statistics(team.getName(), 0, 0, 0, 0, 0, 0, 0);
                 for (Match match : matchesList) {
-                    if (team.equals(match.Home)) {
+                    if (team.equals(match.getHome())) {
                         for (MatchResult result : results) {
-                            if (result.MatchId == match.MatchId) {
+                            if (result.MatchId == match.getMatchId()) {
                                 if (result.isHomeWinner) {
                                     //win
                                     statistics.points += 3;
@@ -79,9 +81,9 @@ public class GroupsActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                    } else if (team.equals(match.Away)) {
+                    } else if (team.equals(match.getAway())) {
                         for (MatchResult result : results) {
-                            if (result.MatchId == match.MatchId) {
+                            if (result.MatchId == match.getMatchId()) {
                                 if (result.isDraw) {
                                     //remis
                                     statistics.points += 1;
@@ -120,10 +122,10 @@ public class GroupsActivity extends AppCompatActivity {
         } else {
             //tu ma byc wszędzie po 0
         }
-        List<Team> allTeams = databaseManager.getTeams();
+        List<Team> allTeams = databaseManager.GetAllTeams();
         if (results != null) {
             for (Team item : allTeams) {
-                if (chosenTeam.equals(item.TeamName)) {
+                if (chosenTeam.equals(item.getName())) {
                     yourTeam = item;
                 }
             }
@@ -132,8 +134,8 @@ public class GroupsActivity extends AppCompatActivity {
             int i = 0;
             int group = 1;
             for (Team item : allTeams) {
-                listOld.add(item.TeamName);
-                if (chosenTeam.equals(item.TeamName)) {
+                listOld.add(item.getName());
+                if (chosenTeam.equals(item.getName())) {
                     yourTeam = item;
                 }
                 if (i == 3) {
@@ -297,7 +299,7 @@ public class GroupsActivity extends AppCompatActivity {
     public void btnPlayPressed(View view) {
         Intent i = new Intent(this, SimulateGroupStage.class);
         i.putExtra("ChosenTeam", chosenTeam);
-        i.putExtra("Group", yourTeam.Group);
+        i.putExtra("Group", yourTeam.getGroup());
         startActivity(i);
     }
 }
