@@ -15,6 +15,20 @@
         android:theme="@style/Theme.SMProjekt"
         tools:targetApi="31">
         <activity
+            android:name=".RoundOf4Activity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".RoundOf8Activity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".EditTeamActivity"
             android:exported="false">
             <meta-data
