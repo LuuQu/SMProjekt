@@ -13,7 +13,7 @@ import com.wojewnikkoniecko.smprojekt.Models.Team;
 public class EditTeamActivity extends AppCompatActivity {
     DatabaseManager databaseManager = new DatabaseManager(this);
     TextView name,group;
-    Button delete,update,back;
+    Button update,back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,16 +26,8 @@ public class EditTeamActivity extends AppCompatActivity {
         group = findViewById(R.id.groupId);
         name.setText(teamName);
         group.setText(teamGroup);
-        delete = findViewById(R.id.deleteButtonId);
         update = findViewById(R.id.updateButtonId);
         back = findViewById(R.id.backButtonId);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                databaseManager.DeleteOneTeam(team);
-                finish();
-            }
-        });
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

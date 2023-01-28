@@ -10,11 +10,7 @@ public class Team {
 
     @Override
     public String toString() {
-        return "Team{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", group='" + group + '\'' +
-                '}';
+        return "Team: " + name + " Group: " + group;
     }
 
     public Team(int id, String name, String group) {
