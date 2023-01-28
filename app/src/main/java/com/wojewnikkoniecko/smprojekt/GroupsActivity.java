@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -35,6 +36,7 @@ public class GroupsActivity extends AppCompatActivity {
     Team yourTeam;
     Gson gson = new Gson();
     Boolean isSimulated = false;
+    Boolean buttonIsMoved = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,8 @@ public class GroupsActivity extends AppCompatActivity {
             }
         }
         int x = i * 2;
+        Button RoundOfSixteen = findViewById(R.id.RoundOfSixteen);
+        RoundOfSixteen.setVisibility(View.GONE);
     }
 
     @Override
@@ -223,7 +227,8 @@ public class GroupsActivity extends AppCompatActivity {
         TextView team3 = findViewById(R.id.team3);
         TextView team4 = findViewById(R.id.team4);
         if (isSimulated == true) {
-
+            Button RoundOfSixteen = findViewById(R.id.RoundOfSixteen);
+            RoundOfSixteen.setVisibility(View.VISIBLE);
             ArrayList<Statistics> list = teamsStats.get(group);
             team1 = findViewById(R.id.team1);
             team2 = findViewById(R.id.team2);
@@ -312,6 +317,11 @@ public class GroupsActivity extends AppCompatActivity {
             } else if (list.get(3).getTeamName().equals(chosenTeam)) {
                 team4.setTextColor(Color.RED);
             }
+            if (!buttonIsMoved) {
+                Button play = findViewById(R.id.Play);
+                play.setText("Zagraj ponownie");
+                buttonIsMoved = true;
+            }
         } else {
             ArrayList<String> listOld = teams.get(group);
             TextView groupText = findViewById(R.id.GroupName);
@@ -357,10 +367,29 @@ public class GroupsActivity extends AppCompatActivity {
     }
 
     public void btnPlayPressed(View view) {
-        Intent i = new Intent(this, SimulateGroupStage.class);
-        i.putExtra("ChosenTeam", chosenTeam);
-        i.putExtra("Group", yourTeam.getGroup());
+        Intent intent = new Intent(this, SimulateGroupStage.class);
+        intent.putExtra("ChosenTeam", chosenTeam);
+        intent.putExtra("Group", yourTeam.getGroup());
         isSimulated = true;
-        startActivity(i);
+        startActivity(intent);
+    }
+    public void btnRoundOfSixteenPressed(View view){
+        Intent intent = new Intent(this, RoundOf16Activity.class);
+        List<Team> winners = new ArrayList<>();
+        for(int i = 1; i< 9; i++){
+            ArrayList<Statistics> list = teamsStats.get(i);
+            Statistics team1 = list.get(0);
+            Statistics team2 = list.get(1);
+            for(Team team : teamList){
+                if(team1.getTeamName().equals(team.getName())){
+                    winners.add(team);
+                } else if(team2.getTeamName().equals(team.getName())){
+                    winners.add(team);
+                }
+            }
+        }
+        Gson gson = new Gson();
+        intent.putExtra("Winners", gson.toJson(winners));
+        startActivity(intent);
     }
 }
