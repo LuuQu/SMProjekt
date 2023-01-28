@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -28,7 +29,8 @@ public class RoundOf4Activity extends AppCompatActivity {
     Button finalmatch, thirdplace, semi1, semi2, next, back;
     TextView team1, team2, team3, team4, team5, team6, team7, team8;
     TextView idTeam1Goals, idTeam2Goals, idTeam3Goals, idTeam4Goals, idTeam5Goals, idTeam6Goals, idTeam7Goals, idTeam8Goals;
-    TextView championText;
+    TextView championText, championLabel;
+    ImageView trophy;
     DatabaseManager databaseManager = new DatabaseManager(this);
     List<Team> winners = new ArrayList<>();
     HashMap<Integer, MatchKnockoutStage> results = new HashMap<>();
@@ -51,6 +53,7 @@ public class RoundOf4Activity extends AppCompatActivity {
         semi2 = findViewById(R.id.buttonSemifinal2);
         next = findViewById(R.id.idButtonNext);
         back = findViewById(R.id.idButtonBack);
+        trophy = findViewById(R.id.Trophy);
         next.setEnabled(false);
         thirdplace.setEnabled(false);
         finalmatch.setEnabled(false);
@@ -77,9 +80,11 @@ public class RoundOf4Activity extends AppCompatActivity {
             uuid = getIntent().getStringExtra("uuid");
         }
 
-
+        championLabel = findViewById(R.id.idChampionLabel);
         championText = findViewById(R.id.idChampion);
-
+        championLabel.setVisibility(View.GONE);
+        championText.setVisibility(View.GONE);
+        trophy.setVisibility(View.GONE);
         team1 = findViewById(R.id.idTeam1);
         team2 = findViewById(R.id.idTeam2);
         team3 = findViewById(R.id.idTeam3);
@@ -129,6 +134,9 @@ public class RoundOf4Activity extends AppCompatActivity {
                 next.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
             }
             championText.setText(champion);
+            championLabel.setVisibility(View.VISIBLE);
+            championText.setVisibility(View.VISIBLE);
+            trophy.setVisibility(View.VISIBLE);
         });
         thirdplace.setOnClickListener(view -> {
             //losuje wynik meczu 2

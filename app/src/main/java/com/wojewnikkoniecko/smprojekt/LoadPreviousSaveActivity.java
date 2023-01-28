@@ -1,6 +1,7 @@
 package com.wojewnikkoniecko.smprojekt;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +37,6 @@ public class LoadPreviousSaveActivity extends AppCompatActivity {
             SaveData saveData = gson.fromJson(json, SaveData.class);
             saveList.add(saveData.getChampion() + " " + save.getValue());
         }
-        setContentView(R.layout.activity_choosing_team);
         autoCompleteTextView = findViewById(R.id.teams);
         adapterItems = new ArrayAdapter<>(this,R.layout.list_item,saveList);
         autoCompleteTextView.setAdapter(adapterItems);
@@ -46,6 +46,7 @@ public class LoadPreviousSaveActivity extends AppCompatActivity {
             Toast.makeText(LoadPreviousSaveActivity.this,"Wybrałeś ten zapis: " + item,Toast.LENGTH_SHORT).show();
             Button button = (Button)findViewById(R.id.nextButton);
             button.setEnabled(true);
+            button.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
         });
     }
     public void loadGroups(View view) {

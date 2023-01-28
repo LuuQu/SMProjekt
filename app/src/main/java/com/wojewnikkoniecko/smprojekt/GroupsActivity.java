@@ -258,7 +258,7 @@ public class GroupsActivity extends AppCompatActivity {
             TextView goalDifference4 = findViewById(R.id.goalDifference4);
             goalDifference4.setText(String.valueOf(list.get(3).getGoalOutcome()));
 
-            groupText.setText("Grupa " + groupsNames[group - 1]);
+            groupText.setText("Group " + groupsNames[group - 1]);
             team1.setText(list.get(0).getTeamName());
             team2.setText(list.get(1).getTeamName());
             team3.setText(list.get(2).getTeamName());
@@ -278,14 +278,14 @@ public class GroupsActivity extends AppCompatActivity {
             }
             if (!buttonIsMoved) {
                 Button play = findViewById(R.id.Play);
-                play.setText("Zagraj ponownie");
+                play.setText("PLay again");
                 buttonIsMoved = true;
             }
         } else {
 
             ArrayList<String> listOld = teams.get(group);
             TextView groupText = findViewById(R.id.GroupName);
-            groupText.setText("Grupa " + groupsNames[group - 1]);
+            groupText.setText("Group " + groupsNames[group - 1]);
             team1.setText(listOld.get(0));
             team2.setText(listOld.get(1));
             team3.setText(listOld.get(2));

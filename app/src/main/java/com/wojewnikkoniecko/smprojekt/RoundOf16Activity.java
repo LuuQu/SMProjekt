@@ -63,7 +63,7 @@ public class RoundOf16Activity extends AppCompatActivity {
             match6.setEnabled(false);
             match7.setEnabled(false);
             match8.setEnabled(false);*/
-            back.setEnabled(false);
+            //back.setEnabled(false);
            /* next.setEnabled(true);*/
 
             match1.setText("Result");
