@@ -35,6 +35,7 @@ public class GroupsActivity extends AppCompatActivity {
     Team yourTeam;
     Gson gson = new Gson();
     Boolean isSimulated = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,14 +70,18 @@ public class GroupsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        matchesList = databaseManager.GetAllMatches();
-        IsSimulated();
+        if (isSimulated) {
+            matchesList = databaseManager.GetAllMatches();
+            IsSimulated();
+        }
+
     }
 
     public void loadChoosingTeam(View view) {
         finish();
     }
-    public void IsSimulated(){
+
+    public void IsSimulated() {
         int index = 1;
         int groupIndex = 1;
         ArrayList<Statistics> stats = new ArrayList<>();
@@ -134,12 +139,84 @@ public class GroupsActivity extends AppCompatActivity {
             index++;
             if (index > 4) {
                 index = 1;
-                teamsStats.put(groupIndex, stats);
+                Statistics team1 = stats.get(0);
+                Statistics team2 = stats.get(1);
+                Statistics team3 = stats.get(2);
+                Statistics team4 = stats.get(3);
+
+                Statistics the_best = team1;
+                Statistics good = team2;
+                Statistics worse = team3;
+                Statistics the_worst = team4;
+
+                if (team1.getPoints() < team2.getPoints()) {
+                    the_best = team2;
+                    worse = team1;
+                } else if (team1.getPoints() == team2.getPoints() && team1.getGoalOutcome() < team2.getGoalOutcome()) {
+                    the_best = team2;
+                    worse = team1;
+                }
+                if (team3.getPoints() < team4.getPoints()) {
+                    good = team4;
+                    the_worst = team3;
+                } else if (team3.getPoints() == team4.getPoints() && team3.getGoalOutcome() < team4.getGoalOutcome()) {
+                    good = team4;
+                    the_worst = team3;
+                }
+                if (the_best.getPoints() < good.getPoints()) {
+                    Statistics tmp = the_best;
+                    the_best = good;
+                    good = tmp;
+                } else if (the_best.getPoints() == good.getPoints() && the_best.getGoalOutcome() < good.getGoalOutcome()) {
+                    Statistics tmp = the_best;
+                    the_best = good;
+                    good = tmp;
+                }
+                if (good.getPoints() < worse.getPoints()) {
+                    Statistics tmp = good;
+                    good = worse;
+                    worse = tmp;
+                } else if (good.getPoints() == worse.getPoints() && good.getGoalOutcome() < worse.getGoalOutcome()) {
+                    Statistics tmp = good;
+                    good = worse;
+                    worse = tmp;
+                }
+                if (good.getPoints() < the_worst.getPoints()) {
+                    Statistics tmp = good;
+                    good = the_worst;
+                    the_worst = tmp;
+                } else if (good.getPoints() == the_worst.getPoints() && good.getGoalOutcome() < the_worst.getGoalOutcome()) {
+                    Statistics tmp = good;
+                    good = the_worst;
+                    the_worst = tmp;
+                }
+                if (worse.getPoints() < the_worst.getPoints()) {
+                    Statistics tmp = worse;
+                    worse = the_worst;
+                    the_worst = tmp;
+                } else if (worse.getPoints() == the_worst.getPoints() && worse.getGoalOutcome() < the_worst.getGoalOutcome()) {
+                    Statistics tmp = worse;
+                    worse = the_worst;
+                    the_worst = tmp;
+                }
+
+                ArrayList<Statistics> list = new ArrayList<>();
+                list.add(the_best);
+                list.add(good);
+                list.add(worse);
+                list.add(the_worst);
+                teamsStats.put(groupIndex, list);
                 stats = new ArrayList<>();
                 groupIndex++;
             }
         }
+        HashMap<Integer, ArrayList<Statistics>> teamsStatsTmp = new HashMap<Integer, ArrayList<Statistics>>();
+        for (int i = 0; i < 8; i++) {
+            stats = teamsStats.get(i);
+
+        }
     }
+
     public void SetTeams(int group) {
         TextView team1 = findViewById(R.id.team1);
         TextView team2 = findViewById(R.id.team2);

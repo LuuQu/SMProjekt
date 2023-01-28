@@ -123,21 +123,12 @@ public class SimulateGroupStage extends AppCompatActivity {
         TextView homeGoalsText = findViewById(R.id.homeGoals);
         TextView awayGoalsText = findViewById(R.id.awayGoals);
         Random rand = new Random();
-        boolean isHomeWinner = false;
-        boolean isDraw = false;
         int homeOpportunities = rand.nextInt(7);
         int awayOpportunities = rand.nextInt(7);
         double homeLuck = rand.nextInt(100) * 0.01;
         double awayLuck = rand.nextInt(100) * 0.01;
         int homeGoals = (int) Math.round(homeOpportunities * homeLuck);
         int awayGoals = (int) Math.round(awayOpportunities * awayLuck);
-        if (homeGoals > awayGoals) {
-            isHomeWinner = true;
-        } else if (homeGoals > awayGoals) {
-            isHomeWinner = false;
-        } else {
-            isDraw = true;
-        }
         Simulate.setVisibility(View.GONE);
         results.add(new Match(nextMatch.getMatchId(),nextMatch.getHome(),nextMatch.getAway(),homeGoals,awayGoals));
         homeGoalsText.setVisibility(View.VISIBLE);
@@ -167,12 +158,6 @@ public class SimulateGroupStage extends AppCompatActivity {
         i.putExtra("isSimulated", true);
         setResult(RESULT_OK, i);
         finish();
-//        Gson gson = new Gson();
-//        Intent i = new Intent(this, GroupsActivity.class);
-//        i.putExtra("ChosenTeam", chosenTeam);
-//        i.putExtra("ChosenTeamMatches", gson.toJson(results));
-//        i.putExtra("Completed", "true");
-//        startActivity(i);
     }
 
 
