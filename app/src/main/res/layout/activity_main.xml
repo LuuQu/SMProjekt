@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
     <ImageView
@@ -12,7 +13,7 @@
         android:layout_height="201dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.19"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.326"
@@ -61,39 +62,29 @@
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:text="Nowa Gra"
+            android:backgroundTint="@color/enabledButton"
             android:onClick="newGame"
-            tools:ignore="MissingConstraints" />
+            android:text="Nowa Gra"
+            tools:ignore="MissingConstraints"
+            />
 
         <Button
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:text="Wczytaj grę"
+            android:backgroundTint="@color/enabledButton"
             android:onClick="loadGame"
+            android:text="Wczytaj grę"
             tools:ignore="MissingConstraints" />
 
         <Button
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:text="Wyjście"
+            android:backgroundTint="@color/enabledButton"
             android:onClick="exit"
+            android:text="Wyjście"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
-
-    <Button
-        android:layout_width="300dp"
-        android:layout_height="60dp"
-        android:layout_margin="10dp"
-        android:onClick="teamActivity"
-        android:text="Team Activity"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976"
-        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

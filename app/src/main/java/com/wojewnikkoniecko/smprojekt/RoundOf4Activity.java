@@ -1,6 +1,7 @@
 package com.wojewnikkoniecko.smprojekt;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -97,6 +98,7 @@ public class RoundOf4Activity extends AppCompatActivity {
         finalmatch.setOnClickListener(view -> {
             //losuje wynik meczu 1
             finalmatch.setEnabled(false);
+            finalmatch.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
             int matchId = 1;
             if (!loadedSave) {
                 SimulateMatch(view, matchId, winner1, winner2);
@@ -124,12 +126,14 @@ public class RoundOf4Activity extends AppCompatActivity {
             }
             if (!thirdplace.isEnabled()) {
                 next.setEnabled(true);
+                next.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
             }
             championText.setText(champion);
         });
         thirdplace.setOnClickListener(view -> {
             //losuje wynik meczu 2
             thirdplace.setEnabled(false);
+            thirdplace.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
             int matchId = 2;
             if (!loadedSave) {
                 SimulateMatch(view, matchId, loser1, loser2);
@@ -145,12 +149,14 @@ public class RoundOf4Activity extends AppCompatActivity {
             }
             if (!finalmatch.isEnabled()) {
                 next.setEnabled(true);
+                next.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
             }
 
         });
         semi1.setOnClickListener(view -> {
             //losuje wynik meczu półfinałowego 1
             semi1.setEnabled(false);
+            semi1.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
             int matchId = 3;
             if (!loadedSave) {
                 SimulateMatch(view, matchId, winners.get(0).getName(), winners.get(1).getName());
@@ -186,11 +192,14 @@ public class RoundOf4Activity extends AppCompatActivity {
             if (!semi2.isEnabled()) {
                 finalmatch.setEnabled(true);
                 thirdplace.setEnabled(true);
+                finalmatch.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
+                thirdplace.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
             }
         });
         semi2.setOnClickListener(view -> {
             //losuje wynik meczu półfinałowego 2
             semi2.setEnabled(false);
+            semi2.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
             int matchId = 4;
             if (!loadedSave) {
                 SimulateMatch(view, matchId, winners.get(2).getName(), winners.get(3).getName());
@@ -225,6 +234,8 @@ public class RoundOf4Activity extends AppCompatActivity {
             if (!semi1.isEnabled()) {
                 finalmatch.setEnabled(true);
                 thirdplace.setEnabled(true);
+                finalmatch.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
+                thirdplace.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
             }
         });
         next.setOnClickListener(view -> {

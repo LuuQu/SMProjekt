@@ -41,8 +41,4 @@ public class MainActivity extends AppCompatActivity {
     public void exit(View view) {
         System.exit(0);
     }
-    public void teamActivity(View view) {
-        Intent i = new Intent(this, ManagingTeamsActivity.class);
-        startActivity(i);
-    }
 }
