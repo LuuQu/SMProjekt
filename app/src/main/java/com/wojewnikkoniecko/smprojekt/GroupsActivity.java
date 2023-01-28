@@ -67,6 +67,7 @@ public class GroupsActivity extends AppCompatActivity {
             }
         }
         int x = i * 2;
+        SetTeams(activeGroup);
     }
 
     @Override
@@ -75,8 +76,8 @@ public class GroupsActivity extends AppCompatActivity {
         if (isSimulated) {
             matchesList = databaseManager.GetAllMatches();
             IsSimulated();
+            SetTeams(activeGroup);
         }
-
     }
 
     public void loadChoosingTeam(View view) {
@@ -249,7 +250,8 @@ public class GroupsActivity extends AppCompatActivity {
             } else if (list.get(3).getTeamName().equals(chosenTeam)) {
                 team4.setTextColor(Color.RED);
             }
-        } else {
+        }
+        else {
             ArrayList<String> listOld = teams.get(group);
             TextView groupText = findViewById(R.id.GroupName);
             groupText.setText("Grupa " + groupsNames[group - 1]);
