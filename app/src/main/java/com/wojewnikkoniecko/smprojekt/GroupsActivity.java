@@ -43,9 +43,9 @@ public class GroupsActivity extends AppCompatActivity {
     Boolean buttonIsMoved = false;
     String jsonToSave;
     UUID uuid = UUID.randomUUID();
-    SaveData save;
+    SaveData save = new SaveData();
     List<Team> winners = new ArrayList<>();
-
+    String savejson;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +53,9 @@ public class GroupsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_groups);
 
         matchesList = databaseManager.GetAllMatches();
-        String savejson = getIntent().getStringExtra("save");
+        savejson = getIntent().getStringExtra("save");
         Button RoundOfSixteen = findViewById(R.id.RoundOfSixteen);
-        if (!savejson.isEmpty()) {
+        if (savejson != null) {
             Button play = findViewById(R.id.Play);
             play.setVisibility(View.GONE);
             RoundOfSixteen.setVisibility(View.VISIBLE);
@@ -336,7 +336,7 @@ public class GroupsActivity extends AppCompatActivity {
 
     public void btnRoundOfSixteenPressed(View view) {
         Intent intent = new Intent(this, RoundOf16Activity.class);
-        if (save == null) {
+        if (savejson == null) {
             for (int i = 1; i < 9; i++) {
                 ArrayList<Statistics> list = teamsStats.get(i);
                 Statistics team1 = list.get(0);
@@ -350,7 +350,6 @@ public class GroupsActivity extends AppCompatActivity {
                 }
             }
             Gson gson = new Gson();
-            SaveData save = new SaveData();
             save.setWinnersOfGroupStage(winners);
             save.setGroupResults(teamsStats);
         }

@@ -38,6 +38,8 @@ public class RoundOf4Activity extends AppCompatActivity {
     String champion;
     SaveData save;
     String uuid;
+    Gson gson = new Gson();
+    Boolean loadedSave = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,15 +53,29 @@ public class RoundOf4Activity extends AppCompatActivity {
         next.setEnabled(false);
         thirdplace.setEnabled(false);
         finalmatch.setEnabled(false);
-        Gson gson = new Gson();
-        String json = getIntent().getStringExtra("Winners");
-        Type listType = new TypeToken<List<Team>>() {
-        }.getType();
-        winners = gson.fromJson(json, listType);
 
-        String jsonSave = getIntent().getStringExtra("save");
-        save = gson.fromJson(jsonSave, SaveData.class);
-        uuid = getIntent().getStringExtra("uuid");
+        String savejson = getIntent().getStringExtra("loadSave");
+        if (savejson != null) {
+            save = gson.fromJson(savejson, SaveData.class);
+            results = save.getRoundOfFourResults();
+            winners = save.getWinnersOfRoundOfEight();
+            loadedSave = true;
+            finalmatch.setText("Result");
+            thirdplace.setText("Result");
+            semi1.setText("Result");
+            semi2.setText("Result");
+        }
+        else{
+            String json = getIntent().getStringExtra("Winners");
+            Type listType = new TypeToken<List<Team>>() {
+            }.getType();
+            winners = gson.fromJson(json, listType);
+
+            String jsonSave = getIntent().getStringExtra("save");
+            save = gson.fromJson(jsonSave, SaveData.class);
+            uuid = getIntent().getStringExtra("uuid");
+        }
+
 
         championText = findViewById(R.id.idChampion);
 
@@ -82,8 +98,9 @@ public class RoundOf4Activity extends AppCompatActivity {
             //losuje wynik meczu 1
             finalmatch.setEnabled(false);
             int matchId = 1;
-            SimulateMatch(view, matchId, winner1, winner2);
-            MatchKnockoutStage result = results.get(matchId);
+            if (!loadedSave) {
+                SimulateMatch(view, matchId, winner1, winner2);
+            }MatchKnockoutStage result = results.get(matchId);
             if(result.getResultHome() < result.getResultAway()){
                 champion = result.getAway();
             } else if(result.getResultHome() > result.getResultAway()){
@@ -114,8 +131,9 @@ public class RoundOf4Activity extends AppCompatActivity {
             //losuje wynik meczu 2
             thirdplace.setEnabled(false);
             int matchId = 2;
-            SimulateMatch(view, matchId, loser1, loser2);
-            MatchKnockoutStage result = results.get(matchId);
+            if (!loadedSave) {
+                SimulateMatch(view, matchId, loser1, loser2);
+            }MatchKnockoutStage result = results.get(matchId);
             idTeam3Goals = findViewById(R.id.idTeam3Goals);
             idTeam4Goals = findViewById(R.id.idTeam4Goals);
             if (result.getResultHome() == result.getResultAway()) {
@@ -134,8 +152,9 @@ public class RoundOf4Activity extends AppCompatActivity {
             //losuje wynik meczu półfinałowego 1
             semi1.setEnabled(false);
             int matchId = 3;
-            SimulateMatch(view, matchId, winners.get(0).getName(), winners.get(1).getName());
-            MatchKnockoutStage result = results.get(matchId);
+            if (!loadedSave) {
+                SimulateMatch(view, matchId, winners.get(0).getName(), winners.get(1).getName());
+            }MatchKnockoutStage result = results.get(matchId);
             if(result.getResultHome() < result.getResultAway()){
                 winner1 = result.getAway();
                 loser1 = result.getHome();
@@ -173,8 +192,9 @@ public class RoundOf4Activity extends AppCompatActivity {
             //losuje wynik meczu półfinałowego 2
             semi2.setEnabled(false);
             int matchId = 4;
-            SimulateMatch(view, matchId, winners.get(2).getName(), winners.get(3).getName());
-            MatchKnockoutStage result = results.get(matchId);
+            if (!loadedSave) {
+                SimulateMatch(view, matchId, winners.get(2).getName(), winners.get(3).getName());
+            }MatchKnockoutStage result = results.get(matchId);
             if(result.getResultHome() < result.getResultAway()){
                 winner2 = result.getAway();
                 loser2 = result.getHome();
@@ -210,17 +230,19 @@ public class RoundOf4Activity extends AppCompatActivity {
         next.setOnClickListener(view -> {
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            save.setRoundOfFourResults(results);
-            save.setLoser1(loser1);
-            save.setLoser2(loser2);
-            save.setWinner1(winner1);
-            save.setWinner2(winner2);
-            save.setChampion(champion);
+            if(!loadedSave){
+                save.setRoundOfFourResults(results);
+                save.setLoser1(loser1);
+                save.setLoser2(loser2);
+                save.setWinner1(winner1);
+                save.setWinner2(winner2);
+                save.setChampion(champion);
 
-            String savejson = gson.toJson(save);
-            Calendar cal = Calendar.getInstance();
-            databaseManager.SetSave(savejson,cal.getTime().toString());
-            //uuid
+                String saveDatajson = gson.toJson(save);
+                Calendar cal = Calendar.getInstance();
+                databaseManager.SetSave(saveDatajson,cal.getTime().toString());
+            }
+
 
             startActivity(intent);
             finish();

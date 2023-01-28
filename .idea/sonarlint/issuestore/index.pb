@@ -22,7 +22,7 @@ u
 Eapp/src/test/java/com/wojewnikkoniecko/smprojekt/ExampleUnitTest.java,f\a\faa8a504a7747c767680c1cbadaae91d5a98c5b9
 7
 db.json,8\8\882a43610b9835dd51ca4ad37a0967fa0205e328
-z
-Japp/src/main/java/com/wojewnikkoniecko/smprojekt/ChoosingTeamActivity.java,a\e\aeeceebc2dcddd4185e7cc0fef4f1d31f5289415
 v
 Fapp/src/main/java/com/wojewnikkoniecko/smprojekt/EditTeamActivity.java,4\6\4684e4cf2be4c8536fb0cb394e53ad973833a9fc
+x
+Happ/src/main/java/com/wojewnikkoniecko/smprojekt/SimulateGroupStage.java,1\2\12ee0c82d0339151fc6b43f910b1a6022fcda865

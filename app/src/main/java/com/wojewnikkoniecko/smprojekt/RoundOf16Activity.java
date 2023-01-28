@@ -28,7 +28,6 @@ public class RoundOf16Activity extends AppCompatActivity {
     HashMap<Integer, MatchKnockoutStage> results = new HashMap<>();
     List<Team> winnersToRoundOfEight = new ArrayList<>();
     SaveData save;
-    String uuid;
     Gson gson = new Gson();
     Boolean loadedSave = false;
 
@@ -49,26 +48,34 @@ public class RoundOf16Activity extends AppCompatActivity {
         next = findViewById(R.id.idButtonNext);
         back = findViewById(R.id.idButtonBack);
         String savejson = getIntent().getStringExtra("loadSave");
-        if (!savejson.isEmpty()) {
+        if (savejson != null) {
             save = gson.fromJson(savejson, SaveData.class);
             results = save.getRoundOfSixteenResults();
             winnersToRoundOfEight = save.getWinnersOfRoundOfSixteen();
             loadedSave = true;
-
-            match1.setEnabled(false);
+            winners = save.getWinnersOfGroupStage();
+            /*match1.setEnabled(false);
             match2.setEnabled(false);
             match3.setEnabled(false);
             match4.setEnabled(false);
             match5.setEnabled(false);
             match6.setEnabled(false);
             match7.setEnabled(false);
-            match8.setEnabled(false);
+            match8.setEnabled(false);*/
             back.setEnabled(false);
-            next.setEnabled(true);
+           /* next.setEnabled(true);*/
+
+            match1.setText("Result");
+            match2.setText("Result");
+            match3.setText("Result");
+            match4.setText("Result");
+            match5.setText("Result");
+            match6.setText("Result");
+            match7.setText("Result");
+            match8.setText("Result");
         } else {
             String jsonSave = getIntent().getStringExtra("save");
             save = gson.fromJson(jsonSave, SaveData.class);
-            uuid = getIntent().getStringExtra("uuid");
         }
 
 
@@ -111,7 +118,6 @@ public class RoundOf16Activity extends AppCompatActivity {
         team15.setText(winners.get(14).getName());
         team16.setText(winners.get(13).getName());
         next.setEnabled(false);
-
         match1.setOnClickListener(view -> {
             //losuje wynik meczu 1
             match1.setEnabled(false);
@@ -315,7 +321,6 @@ public class RoundOf16Activity extends AppCompatActivity {
             save.setRoundOfSixteenResults(results);
             save.setWinnersOfRoundOfSixteen(winnersToRoundOfEight);
             intent.putExtra("save", gson.toJson(save));
-            intent.putExtra("uuid", uuid.toString());
 
             startActivity(intent);
         });
