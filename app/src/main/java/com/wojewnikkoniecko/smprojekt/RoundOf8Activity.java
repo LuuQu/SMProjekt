@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wojewnikkoniecko.smprojekt.Models.MatchKnockoutStage;
+import com.wojewnikkoniecko.smprojekt.Models.SaveData;
 import com.wojewnikkoniecko.smprojekt.Models.Team;
 
 import java.lang.reflect.Type;
@@ -26,7 +27,8 @@ public class RoundOf8Activity extends AppCompatActivity {
     List<Team> winners = new ArrayList<>();
     HashMap<Integer, MatchKnockoutStage> results = new HashMap<>();
     List<Team> winnersToRoundOfFour = new ArrayList<>();
-
+    SaveData save;
+    String uuid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,10 @@ public class RoundOf8Activity extends AppCompatActivity {
         Type listType = new TypeToken<List<Team>>() {
         }.getType();
         winners = gson.fromJson(json, listType);
+
+        String jsonSave = getIntent().getStringExtra("save");
+        save = gson.fromJson(jsonSave, SaveData.class);
+        uuid = getIntent().getStringExtra("uuid");
 
         team1 = findViewById(R.id.idTeam1);
         team2 = findViewById(R.id.idTeam2);
@@ -172,6 +178,11 @@ public class RoundOf8Activity extends AppCompatActivity {
                 }
             }
             intent.putExtra("Winners", gson.toJson(winnersToRoundOfFour));
+            save.setRoundOfEightResults(results);
+            save.setWinnersOfRoundOfEight(winnersToRoundOfFour);
+            intent.putExtra("save", gson.toJson(save));
+            intent.putExtra("uuid", uuid);
+
             startActivity(intent);
         });
         back.setOnClickListener(view -> {

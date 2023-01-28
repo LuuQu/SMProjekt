@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SMProjekt</string>
     <string name="select">Wybierz drużynę</string>
+    <string name="save">Wybierz zapis</string>
     <string name="Name">Name</string>
     <string name="Group">Group</string>
     <string name="Add">Add</string>

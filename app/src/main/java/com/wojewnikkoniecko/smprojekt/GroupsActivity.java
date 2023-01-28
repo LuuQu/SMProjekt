@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wojewnikkoniecko.smprojekt.Models.Match;
+import com.wojewnikkoniecko.smprojekt.Models.SaveData;
 import com.wojewnikkoniecko.smprojekt.Models.Statistics;
 import com.wojewnikkoniecko.smprojekt.Models.Team;
 
@@ -23,6 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class GroupsActivity extends AppCompatActivity {
 
@@ -39,37 +41,56 @@ public class GroupsActivity extends AppCompatActivity {
     Gson gson = new Gson();
     Boolean isSimulated = false;
     Boolean buttonIsMoved = false;
+    String jsonToSave;
+    UUID uuid = UUID.randomUUID();
+    SaveData save;
+    List<Team> winners = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         teamList = databaseManager.GetAllTeams();
         setContentView(R.layout.activity_groups);
-        matchesList = databaseManager.GetAllMatches();
-        chosenTeam = getIntent().getStringExtra("ChosenTeam");
-        String json = getIntent().getStringExtra("ChosenTeamMatches");
-        if (matchesList.get(0).getResultHome() != -1) {
 
-        }
-        ArrayList<String> listOld = new ArrayList<>();
-        int i = 0;
-        int group = 1;
-        for (Team item : teamList) {
-            listOld.add(item.getName());
-            if (chosenTeam.equals(item.getName())) {
-                yourTeam = item;
-            }
-            if (i == 3) {
-                i = 0;
-                teams.put(group, listOld);
-                listOld = new ArrayList<>();
-                group++;
-            } else {
-                i++;
-            }
-        }
-        int x = i * 2;
+        matchesList = databaseManager.GetAllMatches();
+        String savejson = getIntent().getStringExtra("save");
         Button RoundOfSixteen = findViewById(R.id.RoundOfSixteen);
+        if (!savejson.isEmpty()) {
+            Button play = findViewById(R.id.Play);
+            play.setVisibility(View.GONE);
+            RoundOfSixteen.setVisibility(View.VISIBLE);
+            isSimulated = true;
+            save = gson.fromJson(savejson, SaveData.class);
+            teamsStats = save.getGroupResults();
+            winners = save.getWinnersOfGroupStage();
+            IsSimulated();
+            SetTeams(activeGroup);
+
+        } else {
+            chosenTeam = getIntent().getStringExtra("ChosenTeam");
+            String json = getIntent().getStringExtra("ChosenTeamMatches");
+            if (matchesList.get(0).getResultHome() != -1) {
+
+            }
+            ArrayList<String> listOld = new ArrayList<>();
+            int i = 0;
+            int group = 1;
+            for (Team item : teamList) {
+                listOld.add(item.getName());
+                if (chosenTeam.equals(item.getName())) {
+                    yourTeam = item;
+                }
+                if (i == 3) {
+                    i = 0;
+                    teams.put(group, listOld);
+                    listOld = new ArrayList<>();
+                    group++;
+                } else {
+                    i++;
+                }
+            }
+            int x = i * 2;
+        }
         RoundOfSixteen.setVisibility(View.GONE);
         SetTeams(activeGroup);
     }
@@ -147,7 +168,7 @@ public class GroupsActivity extends AppCompatActivity {
             if (index > 4) {
                 index = 1;
                 Collections.sort(stats, (o1, o2) -> {
-                    if(o1.getPoints() != o2.getPoints()) {
+                    if (o1.getPoints() != o2.getPoints()) {
                         return o2.getPoints() - o1.getPoints();
                     }
                     return o2.getGoalOutcome() - o1.getGoalOutcome();
@@ -312,23 +333,33 @@ public class GroupsActivity extends AppCompatActivity {
         isSimulated = true;
         startActivity(intent);
     }
-    public void btnRoundOfSixteenPressed(View view){
+
+    public void btnRoundOfSixteenPressed(View view) {
         Intent intent = new Intent(this, RoundOf16Activity.class);
-        List<Team> winners = new ArrayList<>();
-        for(int i = 1; i< 9; i++){
-            ArrayList<Statistics> list = teamsStats.get(i);
-            Statistics team1 = list.get(0);
-            Statistics team2 = list.get(1);
-            for(Team team : teamList){
-                if(team1.getTeamName().equals(team.getName())){
-                    winners.add(team);
-                } else if(team2.getTeamName().equals(team.getName())){
-                    winners.add(team);
+        if (save == null) {
+            for (int i = 1; i < 9; i++) {
+                ArrayList<Statistics> list = teamsStats.get(i);
+                Statistics team1 = list.get(0);
+                Statistics team2 = list.get(1);
+                for (Team team : teamList) {
+                    if (team1.getTeamName().equals(team.getName())) {
+                        winners.add(team);
+                    } else if (team2.getTeamName().equals(team.getName())) {
+                        winners.add(team);
+                    }
                 }
             }
+            Gson gson = new Gson();
+            SaveData save = new SaveData();
+            save.setWinnersOfGroupStage(winners);
+            save.setGroupResults(teamsStats);
         }
-        Gson gson = new Gson();
+        else{
+            intent.putExtra("loadSave", gson.toJson(save));
+        }
         intent.putExtra("Winners", gson.toJson(winners));
+        intent.putExtra("save", gson.toJson(save));
+        intent.putExtra("uuid", uuid.toString());
         startActivity(intent);
     }
 }

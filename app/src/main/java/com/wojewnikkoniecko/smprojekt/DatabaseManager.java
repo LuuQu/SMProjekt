@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.wojewnikkoniecko.smprojekt.Models.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DatabaseManager extends SQLiteOpenHelper {
@@ -30,6 +31,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private final String MATCH_RESULT_TEAM_A = "HomeResult";
     private final String MATCH_RESULT_TEAM_B = "AwayResult";
     private final String MATCH_ID = "Id";
+
+    private final String TABLE_SAVE_NAME = "Save";
+    private final String SAVE_ID = "Id";
+    private final String SAVE_JSON = "Json";
+    private final String SAVE_DATE = "Date";
+
+
+
+
     public DatabaseManager(Context context) {
         super(context, "WcDataBase", null, 1);
     }
@@ -39,8 +49,36 @@ public class DatabaseManager extends SQLiteOpenHelper {
         String matchesStatement = "CREATE TABLE " + TABLE_MATCH_NAME +" (" + MATCH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                                     + MATCH_TEAM_A + " TEXT, " + MATCH_TEAM_B + " TEXT, "
                                     + MATCH_RESULT_TEAM_A + " INTEGER, " + MATCH_RESULT_TEAM_B + " INTEGER)";
+        String loadSaveStatement = "CREATE TABLE "+ TABLE_SAVE_NAME + " ("+SAVE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + SAVE_JSON + " TEXT, "+ SAVE_DATE + " TEXT)";
         sqLiteDatabase.execSQL(teamStatement);
         sqLiteDatabase.execSQL(matchesStatement);
+        sqLiteDatabase.execSQL(loadSaveStatement);
+    }
+    public Boolean SetSave(String json, String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SAVE_JSON,json);
+        contentValues.put(SAVE_DATE,date);
+        long insert = db.insert(TABLE_SAVE_NAME, null, contentValues);
+        if(insert == -1) {
+            return false;
+        }
+        return true;
+    }
+
+    public HashMap<String,String> GetAllSaves(){
+        HashMap<String,String> saves = new HashMap<>();
+        String querystring = "SELECT * FROM " + TABLE_SAVE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(querystring,null);
+        if(cursor.moveToFirst()){
+            do{
+                int id = cursor.getInt(0);
+                saves.put(cursor.getString(1), cursor.getString(2));
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return saves;
     }
 
     @Override

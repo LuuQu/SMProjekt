@@ -11,10 +11,14 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wojewnikkoniecko.smprojekt.Models.MatchKnockoutStage;
+import com.wojewnikkoniecko.smprojekt.Models.SaveData;
 import com.wojewnikkoniecko.smprojekt.Models.Team;
 
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -24,6 +28,7 @@ public class RoundOf4Activity extends AppCompatActivity {
     TextView team1, team2, team3, team4, team5, team6, team7, team8;
     TextView idTeam1Goals, idTeam2Goals, idTeam3Goals, idTeam4Goals, idTeam5Goals, idTeam6Goals, idTeam7Goals, idTeam8Goals;
     TextView championText;
+    DatabaseManager databaseManager = new DatabaseManager(this);
     List<Team> winners = new ArrayList<>();
     HashMap<Integer, MatchKnockoutStage> results = new HashMap<>();
     String loser1;
@@ -31,6 +36,8 @@ public class RoundOf4Activity extends AppCompatActivity {
     String winner1;
     String winner2;
     String champion;
+    SaveData save;
+    String uuid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +56,10 @@ public class RoundOf4Activity extends AppCompatActivity {
         Type listType = new TypeToken<List<Team>>() {
         }.getType();
         winners = gson.fromJson(json, listType);
+
+        String jsonSave = getIntent().getStringExtra("save");
+        save = gson.fromJson(jsonSave, SaveData.class);
+        uuid = getIntent().getStringExtra("uuid");
 
         championText = findViewById(R.id.idChampion);
 
@@ -199,6 +210,18 @@ public class RoundOf4Activity extends AppCompatActivity {
         next.setOnClickListener(view -> {
             Intent intent = new Intent(this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            save.setRoundOfFourResults(results);
+            save.setLoser1(loser1);
+            save.setLoser2(loser2);
+            save.setWinner1(winner1);
+            save.setWinner2(winner2);
+            save.setChampion(champion);
+
+            String savejson = gson.toJson(save);
+            Calendar cal = Calendar.getInstance();
+            databaseManager.SetSave(savejson,cal.getTime().toString());
+            //uuid
+
             startActivity(intent);
             finish();
         });

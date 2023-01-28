@@ -22,8 +22,6 @@ u
 Eapp/src/test/java/com/wojewnikkoniecko/smprojekt/ExampleUnitTest.java,f\a\faa8a504a7747c767680c1cbadaae91d5a98c5b9
 7
 db.json,8\8\882a43610b9835dd51ca4ad37a0967fa0205e328
-~
-Napp/src/main/java/com/wojewnikkoniecko/smprojekt/LoadPreviousSaveActivity.java,e\e\eed533aa27d34999577217f0fabe7e21e38a378a
 z
 Japp/src/main/java/com/wojewnikkoniecko/smprojekt/ChoosingTeamActivity.java,a\e\aeeceebc2dcddd4185e7cc0fef4f1d31f5289415
 v
