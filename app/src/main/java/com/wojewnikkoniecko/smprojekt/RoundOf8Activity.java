@@ -1,6 +1,7 @@
 package com.wojewnikkoniecko.smprojekt;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,6 +69,7 @@ public class RoundOf8Activity extends AppCompatActivity {
         match1.setOnClickListener(view -> {
             //losuje wynik meczu 1
             match1.setEnabled(false);
+            match1.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
             int matchId = 1;
             SimulateMatch(view, matchId, winners.get(0).getName(), winners.get(1).getName());
             MatchKnockoutStage result = results.get(matchId);
@@ -83,11 +85,13 @@ public class RoundOf8Activity extends AppCompatActivity {
             }
             if(!match2.isEnabled() && !match3.isEnabled() && !match4.isEnabled()) {
                 next.setEnabled(true);
+                next.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
             }
         });
         match2.setOnClickListener(view -> {
             //losuje wynik meczu 2
             match2.setEnabled(false);
+            match2.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
             int matchId = 2;
             SimulateMatch(view, matchId, winners.get(2).getName(), winners.get(3).getName());
             MatchKnockoutStage result = results.get(matchId);
@@ -103,11 +107,13 @@ public class RoundOf8Activity extends AppCompatActivity {
             }
             if(!match1.isEnabled() && !match3.isEnabled() && !match4.isEnabled()) {
                 next.setEnabled(true);
+                next.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
             }
         });
         match3.setOnClickListener(view -> {
             //losuje wynik meczu 3
             match3.setEnabled(false);
+            match3.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
             int matchId = 3;
             SimulateMatch(view, matchId, winners.get(4).getName(), winners.get(5).getName());
             MatchKnockoutStage result = results.get(matchId);
@@ -124,11 +130,13 @@ public class RoundOf8Activity extends AppCompatActivity {
             }
             if(!match2.isEnabled() && !match1.isEnabled() && !match4.isEnabled()) {
                 next.setEnabled(true);
+                next.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
             }
         });
         match4.setOnClickListener(view -> {
             //losuje wynik meczu 4
             match4.setEnabled(false);
+            match4.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
             int matchId = 4;
             SimulateMatch(view, matchId, winners.get(6).getName(), winners.get(7).getName());
             MatchKnockoutStage result = results.get(matchId);
@@ -144,6 +152,7 @@ public class RoundOf8Activity extends AppCompatActivity {
             }
             if(!match2.isEnabled() && !match3.isEnabled() && !match1.isEnabled()) {
                 next.setEnabled(true);
+                next.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
             }
         });
         DatabaseManager databaseManager = new DatabaseManager(this);
