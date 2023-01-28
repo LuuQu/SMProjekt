@@ -3,8 +3,10 @@ package com.wojewnikkoniecko.smprojekt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +30,7 @@ public class ChoosingTeamActivity extends AppCompatActivity {
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterItems;
     DatabaseManager databaseManager = new DatabaseManager(this);
+    Boolean backFromIntent = false;
     private String chosenteam = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +49,19 @@ public class ChoosingTeamActivity extends AppCompatActivity {
             Toast.makeText(ChoosingTeamActivity.this,"Wybrałeś drużynę: " + item,Toast.LENGTH_SHORT).show();
             Button button = (Button)findViewById(R.id.nextButton);
             button.setEnabled(true);
+            button.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(backFromIntent) {
+            databaseManager.GetAllTeams();
+            backFromIntent = false;
+        }
+    }
+
     public void loadGroups(View view) {
         Intent i = new Intent(this, GroupsActivity.class);
         i.putExtra("ChosenTeam", chosenteam);
@@ -57,4 +71,9 @@ public class ChoosingTeamActivity extends AppCompatActivity {
         finish();
     }
 
+    public void teamActivity(View view) {
+        backFromIntent = true;
+        Intent i = new Intent(this, ManagingTeamsActivity.class);
+        startActivity(i);
+    }
 }
