@@ -38,6 +38,7 @@ public class RoundOf8Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_round_of8);
+        getSupportActionBar().hide();
         favTeam = getIntent().getStringExtra("favTeam");
         match1 = findViewById(R.id.idButton1);
         match2 = findViewById(R.id.idButton2);

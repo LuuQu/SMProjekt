@@ -46,6 +46,7 @@ public class GroupsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
+        getSupportActionBar().hide();
         roundOf8 = findViewById(R.id.idButtonRoundOfSixteen);
         simulateAll = findViewById(R.id.idButtonSimulateAll);
         simulateAll.setEnabled(true);

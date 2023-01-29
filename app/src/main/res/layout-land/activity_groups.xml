@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundland"
+    tools:context=".GroupsActivity">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="650dp"
+        android:layout_height="380dp"
+        android:background="@drawable/rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/GroupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Group A"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:backgroundTint="@color/enabledButton"
+        android:orientation="vertical"
+        android:scaleX="0.9"
+        android:scaleY="0.9"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="Nr"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="Team"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="Pts"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="W"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="D"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="L"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="GF"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="GA"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:padding="8dp"
+                android:text="GD"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="1"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/team1"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/points1"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/wins1"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/ties1"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/loss1"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalScored1"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalConceded1"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalDifference1"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="2"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/team2"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/points2"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/wins2"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/ties2"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/loss2"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalScored2"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalConceded2"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalDifference2"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="3"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/team3"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/points3"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/wins3"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/ties3"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/loss3"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalScored3"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalConceded3"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalDifference3"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="35dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="4"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/team4"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/points4"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/wins4"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/ties4"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/loss4"
+                android:layout_width="30dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalScored4"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalConceded4"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/goalDifference4"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/prevButton"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/enabledButton"
+        android:onClick="prevGroup"
+        android:text="Previous group"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.67"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/enabledButton"
+        android:onClick="nextGroup"
+        android:text="next      group"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.25"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/idButtonSimulateAll"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/enabledButton"
+        android:onClick="btnSimulateAll"
+        android:text="Simulate all"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.67"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.535" />
+
+    <Button
+        android:id="@+id/SimulateSingleGroupId"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/enabledButton"
+        android:onClick="simulateSingleGroup"
+        android:text="simulate 1 group"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.535" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="110dp"
+        android:layout_height="80dp"
+        android:backgroundTint="@color/enabledButton"
+        android:onClick="loadChoosingTeam"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.67"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/idButtonRoundOfSixteen"
+        android:layout_width="110dp"
+        android:layout_height="80dp"
+        android:backgroundTint="@color/enabledButton"
+        android:onClick="btnRoundOfSixteenPressed"
+        android:text="Go to round      of 8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87" />
+</androidx.constraintlayout.widget.ConstraintLayout>
