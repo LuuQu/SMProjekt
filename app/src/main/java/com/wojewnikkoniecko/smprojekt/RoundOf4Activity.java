@@ -48,6 +48,7 @@ public class RoundOf4Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_round_of4);
+        getSupportActionBar().hide();
         favTeam = getIntent().getStringExtra("favTeam");
         finalmatch = findViewById(R.id.buttonFinal);
         thirdplace = findViewById(R.id.button3rdPlace);

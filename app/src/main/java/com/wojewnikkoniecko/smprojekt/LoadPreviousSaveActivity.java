@@ -34,6 +34,7 @@ public class LoadPreviousSaveActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_previous_save);
+        getSupportActionBar().hide();
         saves = databaseManager.GetAllSaves();
         for(Map.Entry<String,String> save : saves.entrySet()){
             String json = save.getKey();

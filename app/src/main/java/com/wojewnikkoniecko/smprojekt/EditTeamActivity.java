@@ -17,11 +17,12 @@ public class EditTeamActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_edit_team);
+        getSupportActionBar().hide();
         int teamId = getIntent().getIntExtra("id",0);
         String teamName = getIntent().getStringExtra("name");
         String teamGroup = getIntent().getStringExtra("group");
         Team team = new Team(teamId,teamName,teamGroup);
-        setContentView(R.layout.activity_edit_team);
         name = findViewById(R.id.nameId);
         group = findViewById(R.id.groupId);
         name.setText(teamName);

@@ -35,11 +35,12 @@ public class ChoosingTeamActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_choosing_team);
+        getSupportActionBar().hide();
         List<Team> teams = databaseManager.GetAllTeams();
         for(Team item : teams){
             teamsAdapter.add(item.getName());
         }
-        setContentView(R.layout.activity_choosing_team);
         autoCompleteTextView = findViewById(R.id.teams);
         adapterItems = new ArrayAdapter<>(this,R.layout.list_item,teamsAdapter);
         autoCompleteTextView.setAdapter(adapterItems);

@@ -24,6 +24,7 @@ public class ManagingTeamsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_managing_teams);
+        getSupportActionBar().hide();
         listView = findViewById(R.id.itemsId);
         exit = findViewById(R.id.idButtonBack);
         UpdateView();
