@@ -1,28 +1,25 @@
 package com.wojewnikkoniecko.smprojekt;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.wojewnikkoniecko.smprojekt.Models.Match;
+import com.wojewnikkoniecko.smprojekt.Models.SaveData;
 import com.wojewnikkoniecko.smprojekt.Models.Statistics;
 import com.wojewnikkoniecko.smprojekt.Models.Team;
-
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 public class GroupsActivity extends AppCompatActivity {
 
@@ -37,53 +34,91 @@ public class GroupsActivity extends AppCompatActivity {
     List<Match> matchesList;
     Team yourTeam;
     Gson gson = new Gson();
-    Boolean isSimulated = false;
-    Boolean buttonIsMoved = false;
+    UUID uuid = UUID.randomUUID();
+    SaveData save = new SaveData();
+    List<Team> winners = new ArrayList<>();
+    String savejson;
+    Random rand = new Random();
+    Button roundOf8, simulateAll;
+    boolean firstLaunch = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        teamList = databaseManager.GetAllTeams();
         setContentView(R.layout.activity_groups);
-        matchesList = databaseManager.GetAllMatches();
-        chosenTeam = getIntent().getStringExtra("ChosenTeam");
-        String json = getIntent().getStringExtra("ChosenTeamMatches");
-        if (matchesList.get(0).getResultHome() != -1) {
+        roundOf8 = findViewById(R.id.idButtonRoundOfSixteen);
+        simulateAll = findViewById(R.id.idButtonSimulateAll);
+        simulateAll.setEnabled(true);
+        simulateAll.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
+        roundOf8.setEnabled(false);
+        roundOf8.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
+        teamList = databaseManager.GetAllTeams();
 
-        }
-        ArrayList<String> listOld = new ArrayList<>();
-        int i = 0;
-        int group = 1;
-        for (Team item : teamList) {
-            listOld.add(item.getName());
-            if (chosenTeam.equals(item.getName())) {
-                yourTeam = item;
+        matchesList = databaseManager.GetAllMatches();
+        savejson = getIntent().getStringExtra("save");
+        if (savejson != null) {
+            save = gson.fromJson(savejson, SaveData.class);
+            for (Match match : save.getGroupResults()) {
+                databaseManager.UpdateMatch(match);
             }
-            if (i == 3) {
-                i = 0;
-                teams.put(group, listOld);
-                listOld = new ArrayList<>();
-                group++;
-            } else {
-                i++;
+            matchesList = databaseManager.GetAllMatches();
+            winners = save.getWinnersOfGroupStage();
+            chosenTeam = save.getChosenTeam();
+            simulateAll.setEnabled(false);
+            simulateAll.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
+            roundOf8.setEnabled(true);
+            roundOf8.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
+        }
+        else {
+            chosenTeam = getIntent().getStringExtra("ChosenTeam");
+            ArrayList<String> listOld = new ArrayList<>();
+            int i = 0;
+            int group = 1;
+            for (Team item : teamList) {
+                listOld.add(item.getName());
+                if (chosenTeam.equals(item.getName())) {
+                    yourTeam = item;
+                }
+                if (i == 3) {
+                    i = 0;
+                    teams.put(group, listOld);
+                    listOld = new ArrayList<>();
+                    group++;
+                } else {
+                    i++;
+                }
             }
         }
-        int x = i * 2;
-        Button RoundOfSixteen = findViewById(R.id.RoundOfSixteen);
-        RoundOfSixteen.setVisibility(View.GONE);
+        IsSimulated();
         SetTeams(activeGroup);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (isSimulated) {
             matchesList = databaseManager.GetAllMatches();
-            IsSimulated();
-            SetTeams(activeGroup);
-        }
+            if (!firstLaunch) {
+                IsSimulated();
+                SetTeams(activeGroup);
+                isAnyMatchLeft();
+            }
+            firstLaunch = false;
     }
-
+    private void isAnyMatchLeft() {
+        boolean isLeft = false;
+        for(Match match : matchesList) {
+            if(match.getResultHome() == -1 || match.getResultAway() == -1) {
+                isLeft = true;
+            }
+        }
+        if(isLeft) {
+            return;
+        }
+        simulateAll.setEnabled(false);
+        simulateAll.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
+        roundOf8.setEnabled(true);
+        roundOf8.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
+    }
     public void loadChoosingTeam(View view) {
         finish();
     }
@@ -96,6 +131,9 @@ public class GroupsActivity extends AppCompatActivity {
             Statistics statistics = new Statistics();
             statistics.setTeamName(team.getName());
             for (Match match : matchesList) {
+                if (match.getResultHome() == -1) {
+                    continue;
+                }
                 if (team.getGroup().equals(match.getHome())) {
                     if (match.getResultHome() > match.getResultAway()) {
                         //win
@@ -147,10 +185,13 @@ public class GroupsActivity extends AppCompatActivity {
             if (index > 4) {
                 index = 1;
                 Collections.sort(stats, (o1, o2) -> {
-                    if(o1.getPoints() != o2.getPoints()) {
+                    if (o1.getPoints() != o2.getPoints()) {
                         return o2.getPoints() - o1.getPoints();
                     }
-                    return o2.getGoalOutcome() - o1.getGoalOutcome();
+                    if(o2.getGoalOutcome() != o1.getGoalOutcome()) {
+                        return o2.getGoalOutcome() - o1.getGoalOutcome();
+                    }
+                    return o2.getGoalsScored() - o1.getGoalsScored();
                 });
                 teamsStats.put(groupIndex, stats);
                 stats = new ArrayList<>();
@@ -159,19 +200,13 @@ public class GroupsActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
     public void SetTeams(int group) {
         TextView team1 = findViewById(R.id.team1);
         TextView team2 = findViewById(R.id.team2);
         TextView team3 = findViewById(R.id.team3);
         TextView team4 = findViewById(R.id.team4);
-        if (isSimulated == true) {
-            Button RoundOfSixteen = findViewById(R.id.RoundOfSixteen);
-            RoundOfSixteen.setVisibility(View.VISIBLE);
             ArrayList<Statistics> list = teamsStats.get(group);
-            team1 = findViewById(R.id.team1);
-            team2 = findViewById(R.id.team2);
-            team3 = findViewById(R.id.team3);
-            team4 = findViewById(R.id.team4);
             TextView groupText = findViewById(R.id.GroupName);
 
             TextView points1 = findViewById(R.id.points1);
@@ -237,52 +272,25 @@ public class GroupsActivity extends AppCompatActivity {
             TextView goalDifference4 = findViewById(R.id.goalDifference4);
             goalDifference4.setText(String.valueOf(list.get(3).getGoalOutcome()));
 
-            groupText.setText("Grupa " + groupsNames[group - 1]);
+            groupText.setText("Group " + groupsNames[group - 1]);
             team1.setText(list.get(0).getTeamName());
             team2.setText(list.get(1).getTeamName());
             team3.setText(list.get(2).getTeamName());
             team4.setText(list.get(3).getTeamName());
-            team1.setTextColor(Color.BLACK);
-            team2.setTextColor(Color.BLACK);
-            team3.setTextColor(Color.BLACK);
-            team4.setTextColor(Color.BLACK);
+            team1.setTextColor(ContextCompat.getColor(this, R.color.white));
+            team2.setTextColor(ContextCompat.getColor(this, R.color.white));
+            team3.setTextColor(ContextCompat.getColor(this, R.color.white));
+            team4.setTextColor(ContextCompat.getColor(this, R.color.white));
             if (list.get(0).getTeamName().equals(chosenTeam)) {
-                team1.setTextColor(Color.RED);
+                team1.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
             } else if (list.get(1).getTeamName().equals(chosenTeam)) {
-                team2.setTextColor(Color.RED);
+                team2.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
             } else if (list.get(2).getTeamName().equals(chosenTeam)) {
-                team3.setTextColor(Color.RED);
+                team3.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
             } else if (list.get(3).getTeamName().equals(chosenTeam)) {
-                team4.setTextColor(Color.RED);
+                team4.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
             }
-            if (!buttonIsMoved) {
-                Button play = findViewById(R.id.Play);
-                play.setText("Zagraj ponownie");
-                buttonIsMoved = true;
-            }
-        } else {
 
-            ArrayList<String> listOld = teams.get(group);
-            TextView groupText = findViewById(R.id.GroupName);
-            groupText.setText("Grupa " + groupsNames[group - 1]);
-            team1.setText(listOld.get(0));
-            team2.setText(listOld.get(1));
-            team3.setText(listOld.get(2));
-            team4.setText(listOld.get(3));
-            team1.setTextColor(Color.BLACK);
-            team2.setTextColor(Color.BLACK);
-            team3.setTextColor(Color.BLACK);
-            team4.setTextColor(Color.BLACK);
-            if (listOld.get(0).equals(chosenTeam)) {
-                team1.setTextColor(Color.RED);
-            } else if (listOld.get(1).equals(chosenTeam)) {
-                team2.setTextColor(Color.RED);
-            } else if (listOld.get(2).equals(chosenTeam)) {
-                team3.setTextColor(Color.RED);
-            } else if (listOld.get(3).equals(chosenTeam)) {
-                team4.setTextColor(Color.RED);
-            }
-        }
 
 
     }
@@ -305,30 +313,61 @@ public class GroupsActivity extends AppCompatActivity {
         SetTeams(activeGroup);
     }
 
-    public void btnPlayPressed(View view) {
-        Intent intent = new Intent(this, SimulateGroupStage.class);
-        intent.putExtra("ChosenTeam", chosenTeam);
-        intent.putExtra("Group", yourTeam.getGroup());
-        isSimulated = true;
-        startActivity(intent);
-    }
-    public void btnRoundOfSixteenPressed(View view){
-        Intent intent = new Intent(this, RoundOf16Activity.class);
-        List<Team> winners = new ArrayList<>();
-        for(int i = 1; i< 9; i++){
-            ArrayList<Statistics> list = teamsStats.get(i);
-            Statistics team1 = list.get(0);
-            Statistics team2 = list.get(1);
-            for(Team team : teamList){
-                if(team1.getTeamName().equals(team.getName())){
-                    winners.add(team);
-                } else if(team2.getTeamName().equals(team.getName())){
-                    winners.add(team);
-                }
+    public void btnSimulateAll(View view) {
+        for (Match match : matchesList) {
+            if (match.getResultHome() == -1) {
+                match.setResultAway(getRandomGoals());
+                match.setResultHome(getRandomGoals());
+                databaseManager.UpdateMatch(match);
             }
         }
-        Gson gson = new Gson();
+        matchesList = databaseManager.GetAllMatches();
+        simulateAll.setEnabled(false);
+        simulateAll.setBackgroundColor(ContextCompat.getColor(this, R.color.disabledButton));
+        roundOf8.setEnabled(true);
+        roundOf8.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
+        IsSimulated();
+        SetTeams(activeGroup);
+    }
+
+    private int getRandomGoals() {
+        int Opportunities = rand.nextInt(7);
+        double Luck = rand.nextInt(100) * 0.01;
+        return (int) Math.round(Opportunities * Luck);
+    }
+
+    public void btnRoundOfSixteenPressed(View view) {
+        Intent intent = new Intent(this, RoundOf16Activity.class);
+        if (savejson == null) {
+            for (int i = 1; i < 9; i++) {
+                ArrayList<Statistics> list = teamsStats.get(i);
+                Statistics team1 = list.get(0);
+                Statistics team2 = list.get(1);
+                for (Team team : teamList) {
+                    if (team1.getTeamName().equals(team.getName())) {
+                        winners.add(team);
+                    } else if (team2.getTeamName().equals(team.getName())) {
+                        winners.add(team);
+                    }
+                }
+            }
+            save.setWinnersOfGroupStage(winners);
+            save.setGroupResults(databaseManager.GetAllMatches());
+            save.setChosenTeam(chosenTeam);
+        } else {
+            intent.putExtra("loadSave", gson.toJson(save));
+        }
         intent.putExtra("Winners", gson.toJson(winners));
+        intent.putExtra("save", gson.toJson(save));
+        intent.putExtra("uuid", uuid.toString());
+        intent.putExtra("favTeam",chosenTeam);
+        startActivity(intent);
+    }
+
+    public void simulateSingleGroup(View view) {
+        Intent intent = new Intent(this, SimulateSingleGroup.class);
+        intent.putExtra("group", groupsNames[activeGroup - 1]);
+        intent.putExtra("favTeam", chosenTeam);
         startActivity(intent);
     }
 }

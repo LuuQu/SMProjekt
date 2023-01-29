@@ -22,5 +22,11 @@ u
 Eapp/src/test/java/com/wojewnikkoniecko/smprojekt/ExampleUnitTest.java,f\a\faa8a504a7747c767680c1cbadaae91d5a98c5b9
 7
 db.json,8\8\882a43610b9835dd51ca4ad37a0967fa0205e328
-~
-Napp/src/main/java/com/wojewnikkoniecko/smprojekt/LoadPreviousSaveActivity.java,e\e\eed533aa27d34999577217f0fabe7e21e38a378a
+r
+Bapp/src/main/java/com/wojewnikkoniecko/smprojekt/Models/Match.java,7\f\7fa97bd44ef0b0e13dd39d90025ac8f1adbcd280
+x
+Happ/src/main/java/com/wojewnikkoniecko/smprojekt/SimulateGroupStage.java,1\2\12ee0c82d0339151fc6b43f910b1a6022fcda865
+P
+ app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
+u
+Eapp/src/main/java/com/wojewnikkoniecko/smprojekt/DatabaseManager.java,1\7\173c7387921af02cc0d959987f1af7202640da51

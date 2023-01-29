@@ -64,7 +64,7 @@
             android:layout_margin="10dp"
             android:backgroundTint="@color/enabledButton"
             android:onClick="newGame"
-            android:text="Nowa Gra"
+            android:text="New Game"
             tools:ignore="MissingConstraints"
             />
 
@@ -74,7 +74,7 @@
             android:layout_margin="10dp"
             android:backgroundTint="@color/enabledButton"
             android:onClick="loadGame"
-            android:text="Wczytaj grę"
+            android:text="Load game"
             tools:ignore="MissingConstraints" />
 
         <Button
@@ -83,7 +83,7 @@
             android:layout_margin="10dp"
             android:backgroundTint="@color/enabledButton"
             android:onClick="exit"
-            android:text="Wyjście"
+            android:text="Exit"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 

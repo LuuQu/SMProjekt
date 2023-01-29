@@ -63,6 +63,7 @@ public class ChoosingTeamActivity extends AppCompatActivity {
     }
 
     public void loadGroups(View view) {
+        databaseManager.ResetMatches();
         Intent i = new Intent(this, GroupsActivity.class);
         i.putExtra("ChosenTeam", chosenteam);
         startActivity(i);

@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="disabledButton">#C8CFD1</color>
     <color name="enabledButton">#043D47</color>
+    <color name="favTeam">#72FF78</color>
 </resources>
