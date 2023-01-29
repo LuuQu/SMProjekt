@@ -165,7 +165,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
         return false;
     }
-
+    public void ResetMatches() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "UPDATE " + TABLE_MATCH_NAME + " SET " + MATCH_RESULT_TEAM_A + " = "
+                + -1 + ", " + MATCH_RESULT_TEAM_B + " = " + -1;
+        db.execSQL(queryString);
+    }
     public void SetMatches() {
         AddMatch(new Match(1, "A1", "A2",-1,-1));
         AddMatch(new Match(2, "A3", "A4",-1,-1));

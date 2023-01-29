@@ -1,0 +1,30 @@
+
+d
+java:S11927"GDefine a constant instead of duplicating this literal "Result" 4 times.(¯ŠŸ—8ï­¥Öß0
+G
+java:S5411`"*Use the primitive boolean expression here.(²ùİÅ8ô­¥Öß0
+G
+java:S5411w"*Use the primitive boolean expression here.(²ùİÅ8õ­¥Öß0
+H
+java:S5411"*Use the primitive boolean expression here.(²ùİÅ8õ­¥Öß0
+H
+java:S5411¦"*Use the primitive boolean expression here.(²ùİÅ8õ­¥Öß0
+H
+java:S5411º"*Use the primitive boolean expression here.(²ùİÅ8ö­¥Öß0
+_
+java:S1659"BDeclare "team2" and all following declarations on a separate line.(Àå”£8Ô®¥Öß0
+k
+java:S1659"IDeclare "idTeam2Goals" and all following declarations on a separate line.(ôÌ–ıÿÿÿÿ8Ö®¥Öß0
+`
+java:S1659"CDeclare "match2" and all following declarations on a separate line.(‚áë8×®¥Öß0
+t
+java:S3776%"RRefactor this method to reduce its Cognitive Complexity from 61 to the 15 allowed.(¨Œşÿÿÿÿ8æ®¥Öß0
+U
+java:S1117<"8Rename "gson" which hides the field declared at line 33.(şëŒ8ì®¥Öß0
+O
+java:S1602Ü",Remove useless curly braces around statement(®¨Çúÿÿÿÿ8š¯¥Öß0
+k	java:S100á"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œŠ8›¯¥Öß0
+I
+java:S1172á"+Remove this unused method parameter "view".(œŠ8¯¥Öß0
+A
+java:S2119â"Save and re-use this "Random".(šŸ«íøÿÿÿÿ8Ÿ¯¥Öß0

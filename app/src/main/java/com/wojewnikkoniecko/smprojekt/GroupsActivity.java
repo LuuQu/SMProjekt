@@ -61,7 +61,10 @@ public class GroupsActivity extends AppCompatActivity {
             RoundOfSixteen.setVisibility(View.VISIBLE);
             isSimulated = true;
             save = gson.fromJson(savejson, SaveData.class);
-            teamsStats = save.getGroupResults();
+            matchesList = save.getGroupResults();
+            for(Match match : matchesList) {
+                databaseManager.UpdateMatch(match);
+            }
             winners = save.getWinnersOfGroupStage();
             IsSimulated();
             SetTeams(activeGroup);
@@ -117,6 +120,9 @@ public class GroupsActivity extends AppCompatActivity {
             Statistics statistics = new Statistics();
             statistics.setTeamName(team.getName());
             for (Match match : matchesList) {
+                if(match.getResultHome() == -1) {
+                    continue;
+                }
                 if (team.getGroup().equals(match.getHome())) {
                     if (match.getResultHome() > match.getResultAway()) {
                         //win
@@ -351,7 +357,8 @@ public class GroupsActivity extends AppCompatActivity {
             }
             Gson gson = new Gson();
             save.setWinnersOfGroupStage(winners);
-            save.setGroupResults(teamsStats);
+            save.setGroupResults(databaseManager.GetAllMatches());
+            save.setChosenTeam(chosenTeam);
         }
         else{
             intent.putExtra("loadSave", gson.toJson(save));
@@ -359,6 +366,13 @@ public class GroupsActivity extends AppCompatActivity {
         intent.putExtra("Winners", gson.toJson(winners));
         intent.putExtra("save", gson.toJson(save));
         intent.putExtra("uuid", uuid.toString());
+        startActivity(intent);
+    }
+    public void simulateSingleGroup(View view) {
+        isSimulated = true;
+        Intent intent = new Intent(this,SimulateSingleGroup.class);
+        intent.putExtra("group", groupsNames[activeGroup-1]);
+        intent.putExtra("favTeam", chosenTeam);
         startActivity(intent);
     }
 }

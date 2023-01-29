@@ -1,11 +1,12 @@
 package com.wojewnikkoniecko.smprojekt.Models;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class SaveData {
-    HashMap<Integer, ArrayList<Statistics>> groupResults;
+    ArrayList<Match> groupResults;
     HashMap<Integer, MatchKnockoutStage> roundOfSixteenResults;
     List<Team> winnersOfRoundOfSixteen;
     HashMap<Integer, MatchKnockoutStage> roundOfEightResults;
@@ -15,7 +16,16 @@ public class SaveData {
     String loser2;
     String winner1;
     String winner2;
+    String chosenTeam;
     String champion;
+
+    public String getChampion() {
+        return champion;
+    }
+
+    public void setChampion(String champion) {
+        this.champion = champion;
+    }
 
     public String getLoser1() {
         return loser1;
@@ -49,19 +59,19 @@ public class SaveData {
         this.winner2 = winner2;
     }
 
-    public String getChampion() {
-        return champion;
+    public String getChosenTeam() {
+        return chosenTeam;
     }
 
-    public void setChampion(String champion) {
-        this.champion = champion;
+    public void setChosenTeam(String chosenTeam) {
+        this.chosenTeam = chosenTeam;
     }
 
-    public HashMap<Integer, ArrayList<Statistics>> getGroupResults() {
+    public ArrayList<Match> getGroupResults() {
         return groupResults;
     }
 
-    public void setGroupResults(HashMap<Integer, ArrayList<Statistics>> groupResults) {
+    public void setGroupResults(ArrayList<Match> groupResults) {
         this.groupResults = groupResults;
     }
 
