@@ -32,11 +32,13 @@ public class RoundOf8Activity extends AppCompatActivity {
     String uuid;
     Gson gson = new Gson();
     Boolean loadedSave = false;
+    String favTeam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_round_of8);
+        favTeam = getIntent().getStringExtra("favTeam");
         match1 = findViewById(R.id.idButton1);
         match2 = findViewById(R.id.idButton2);
         match3 = findViewById(R.id.idButton3);
@@ -79,13 +81,37 @@ public class RoundOf8Activity extends AppCompatActivity {
         team8 = findViewById(R.id.idTeam8);
 
         team1.setText(winners.get(0).getName());
+        if(team1.getText().equals(favTeam)) {
+            team1.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team2.setText(winners.get(1).getName());
+        if(team2.getText().equals(favTeam)) {
+            team2.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team3.setText(winners.get(2).getName());
+        if(team3.getText().equals(favTeam)) {
+            team3.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team4.setText(winners.get(3).getName());
+        if(team4.getText().equals(favTeam)) {
+            team4.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team5.setText(winners.get(4).getName());
+        if(team5.getText().equals(favTeam)) {
+            team5.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team6.setText(winners.get(5).getName());
+        if(team6.getText().equals(favTeam)) {
+            team6.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team7.setText(winners.get(6).getName());
+        if(team7.getText().equals(favTeam)) {
+            team7.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team8.setText(winners.get(7).getName());
+        if(team8.getText().equals(favTeam)) {
+            team8.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
 
 
         match1.setOnClickListener(view -> {
@@ -214,6 +240,7 @@ public class RoundOf8Activity extends AppCompatActivity {
             save.setWinnersOfRoundOfEight(winnersToRoundOfFour);
             intent.putExtra("save", gson.toJson(save));
             intent.putExtra("uuid", uuid);
+            intent.putExtra("favTeam",favTeam);
 
             startActivity(intent);
         });

@@ -1,0 +1,94 @@
+
+u
+java:S2293‡"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ë¤èšùÿÿÿÿ
+p
+java:S2293ğ"YReplace the type specification in this constructor call with the diamond operator ("<>").(ÑÒ†å
+d
+java:S1192¡"HDefine a constant instead of duplicating this literal " WHERE " 3 times.(µ…Éªùÿÿÿÿ
+^
+java:S11920"HDefine a constant instead of duplicating this literal " TEXT, " 4 times.(İÓÜØ
+d
+java:S11920"NDefine a constant instead of duplicating this literal "CREATE TABLE " 3 times.(İÓÜØ
+k
+java:S1192š"HDefine a constant instead of duplicating this literal "UPDATE " 3 times.(óáÀøÿÿÿÿ8ß²Øß0
+e
+java:S1192G"ODefine a constant instead of duplicating this literal "SELECT * FROM " 3 times.(úÂØ
+i
+java:S1192š"FDefine a constant instead of duplicating this literal " SET " 3 times.(óáÀøÿÿÿÿ8á²Øß0
+ƒ
+java:S1319E"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(Èğ•×
+‡
+java:S1319†"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Õíª§
+Œ
+java:S1319ï"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ñÖöÌşÿÿÿÿ
+t	java:S116"ZRename this field "TABLE_TEAM_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨ş—²ùÿÿÿÿ
+n	java:S116"TRename this field "TEAM_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—¹Üÿÿÿÿÿ
+j	java:S116"URename this field "TEAM_GROUP" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(çóÕÓ
+l	java:S116"RRename this field "TEAM_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢Ë¯Ëùÿÿÿÿ
+u	java:S116"[Rename this field "TABLE_MATCH_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ëÙıÿÿÿÿ
+q	java:S116"WRename this field "MATCH_TEAM_A" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷Âüÿÿÿÿ
+q	java:S116"WRename this field "MATCH_TEAM_B" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£ óùÿÿÿÿ
+s	java:S116"^Rename this field "MATCH_RESULT_TEAM_A" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(È¦ƒ
+s	java:S116 "^Rename this field "MATCH_RESULT_TEAM_B" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(şºë
+g	java:S116!"SRename this field "MATCH_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(£÷ë,
+o	java:S116#"ZRename this field "TABLE_SAVE_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×–Ç¯
+l	java:S116$"RRename this field "SAVE_ID" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(³òğÜúÿÿÿÿ
+i	java:S116%"TRename this field "SAVE_JSON" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ÕÕ
+h	java:S116&"TRename this field "SAVE_DATE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(óîÔ?
+<
+java:S1170"!Make this final field static too.(¨ş—²ùÿÿÿÿ
+<
+java:S1170"!Make this final field static too.(—¹Üÿÿÿÿÿ
+7
+java:S1170"!Make this final field static too.(çóÕÓ
+<
+java:S1170"!Make this final field static too.(¢Ë¯Ëùÿÿÿÿ
+<
+java:S1170"!Make this final field static too.(ëÙıÿÿÿÿ
+<
+java:S1170"!Make this final field static too.(÷Âüÿÿÿÿ
+<
+java:S1170"!Make this final field static too.(£ óùÿÿÿÿ
+7
+java:S1170"!Make this final field static too.(È¦ƒ
+7
+java:S1170 "!Make this final field static too.(şºë
+6
+java:S1170!"!Make this final field static too.(£÷ë,
+7
+java:S1170#"!Make this final field static too.(×–Ç¯
+<
+java:S1170$"!Make this final field static too.(³òğÜúÿÿÿÿ
+7
+java:S1170%"!Make this final field static too.(±ÕÕ
+6
+java:S1170&"!Make this final field static too.(óîÔ?
+œ
+java:S1186U"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¸†£êıÿÿÿÿ
+h	java:S1009"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔÅê¾ûÿÿÿÿ
+\
+java:S1126?"AReplace this if-then-else statement by a single return statement.(Ò›ò«øÿÿÿÿ
+c	java:S100E"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Èğ•×
+Q
+java:S1854L"6Remove this useless assignment to local variable "id".(õò¾ûÿÿÿÿ
+B
+java:S1481L"'Remove this unused "id" local variable.(õò¾ûÿÿÿÿ
+h	java:S100X"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿ŒĞñşÿÿÿÿ
+h	java:S100z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í—²óùÿÿÿÿ
+]
+java:S1126"AReplace this if-then-else statement by a single return statement.(Ò›ò«øÿÿÿÿ
+d	java:S100†"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Õíª§
+d	java:S100˜"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨¬•¡
+i	java:S100Ÿ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦ËÇşÿÿÿÿ
+]
+java:S1126£"AReplace this if-then-else statement by a single return statement.(ä²œ¼øÿÿÿÿ
+k	java:S100¨"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(çæÛ‡8€×±Øß0
+i	java:S100®"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«ö¤ÿÿÿÿÿ
+i	java:S100à"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œåòíûÿÿÿÿ
+]
+java:S1126ê"AReplace this if-then-else statement by a single return statement.(Ò›ò«øÿÿÿÿ
+i	java:S100ï"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ñÖöÌşÿÿÿÿ
+d	java:S100‚"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÇƒüÒ
+d	java:S100Š"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éô¦
+]
+java:S1126"AReplace this if-then-else statement by a single return statement.(ä²œ¼øÿÿÿÿ

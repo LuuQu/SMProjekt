@@ -43,10 +43,12 @@ public class RoundOf4Activity extends AppCompatActivity {
     String uuid;
     Gson gson = new Gson();
     Boolean loadedSave = false;
+    String favTeam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_round_of4);
+        favTeam = getIntent().getStringExtra("favTeam");
         finalmatch = findViewById(R.id.buttonFinal);
         thirdplace = findViewById(R.id.button3rdPlace);
         semi1 = findViewById(R.id.buttonSemifinal1);
@@ -96,9 +98,21 @@ public class RoundOf4Activity extends AppCompatActivity {
         team8 = findViewById(R.id.idTeam8);
 
         team5.setText(winners.get(0).getName());
+        if(team5.getText().equals(favTeam)) {
+            team5.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team6.setText(winners.get(1).getName());
+        if(team6.getText().equals(favTeam)) {
+            team6.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team7.setText(winners.get(2).getName());
+        if(team7.getText().equals(favTeam)) {
+            team7.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team8.setText(winners.get(3).getName());
+        if(team8.getText().equals(favTeam)) {
+            team8.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
 
         finalmatch.setOnClickListener(view -> {
             //losuje wynik meczu 1
@@ -134,6 +148,9 @@ public class RoundOf4Activity extends AppCompatActivity {
                 next.setBackgroundColor(ContextCompat.getColor(this, R.color.enabledButton));
             }
             championText.setText(champion);
+            if(championText.getText().equals(favTeam)) {
+                championText.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+            }
             championLabel.setVisibility(View.VISIBLE);
             championText.setVisibility(View.VISIBLE);
             trophy.setVisibility(View.VISIBLE);
@@ -196,7 +213,13 @@ public class RoundOf4Activity extends AppCompatActivity {
 
             }
             team1.setText(winner1);
+            if(team1.getText().equals(favTeam)) {
+                team1.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+            }
             team3.setText(loser1);
+            if(team3.getText().equals(favTeam)) {
+                team3.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+            }
             if (!semi2.isEnabled()) {
                 finalmatch.setEnabled(true);
                 thirdplace.setEnabled(true);
@@ -238,7 +261,13 @@ public class RoundOf4Activity extends AppCompatActivity {
                 idTeam7Goals.setText(String.valueOf(result.getResultHome()));
             }
             team2.setText(winner2);
+            if(team2.getText().equals(favTeam)) {
+                team2.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+            }
             team4.setText(loser2);
+            if(team4.getText().equals(favTeam)) {
+                team4.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+            }
             if (!semi1.isEnabled()) {
                 finalmatch.setEnabled(true);
                 thirdplace.setEnabled(true);

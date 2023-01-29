@@ -31,13 +31,12 @@ public class RoundOf16Activity extends AppCompatActivity {
     SaveData save;
     Gson gson = new Gson();
     Boolean loadedSave = false;
-
+    String favTeam;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_round_of16);
-
-
+        favTeam = getIntent().getStringExtra("favTeam");
         match1 = findViewById(R.id.idButton1);
         match2 = findViewById(R.id.idButton2);
         match3 = findViewById(R.id.idButton3);
@@ -55,17 +54,6 @@ public class RoundOf16Activity extends AppCompatActivity {
             winnersToRoundOfEight = save.getWinnersOfRoundOfSixteen();
             loadedSave = true;
             winners = save.getWinnersOfGroupStage();
-            /*match1.setEnabled(false);
-            match2.setEnabled(false);
-            match3.setEnabled(false);
-            match4.setEnabled(false);
-            match5.setEnabled(false);
-            match6.setEnabled(false);
-            match7.setEnabled(false);
-            match8.setEnabled(false);*/
-            //back.setEnabled(false);
-           /* next.setEnabled(true);*/
-
             match1.setText("Result");
             match2.setText("Result");
             match3.setText("Result");
@@ -103,21 +91,69 @@ public class RoundOf16Activity extends AppCompatActivity {
         team16 = findViewById(R.id.idTeam16);
 
         team1.setText(winners.get(0).getName());
+        if(team1.getText().equals(favTeam)) {
+            team1.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team2.setText(winners.get(3).getName());
+        if(team2.getText().equals(favTeam)) {
+            team2.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team3.setText(winners.get(4).getName());
+        if(team3.getText().equals(favTeam)) {
+            team3.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team4.setText(winners.get(7).getName());
+        if(team4.getText().equals(favTeam)) {
+            team4.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team5.setText(winners.get(8).getName());
+        if(team5.getText().equals(favTeam)) {
+            team5.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team6.setText(winners.get(11).getName());
+        if(team6.getText().equals(favTeam)) {
+            team6.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team7.setText(winners.get(12).getName());
+        if(team7.getText().equals(favTeam)) {
+            team7.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team8.setText(winners.get(15).getName());
+        if(team8.getText().equals(favTeam)) {
+            team8.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team9.setText(winners.get(2).getName());
+        if(team9.getText().equals(favTeam)) {
+            team9.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team10.setText(winners.get(1).getName());
+        if(team10.getText().equals(favTeam)) {
+            team10.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team11.setText(winners.get(6).getName());
+        if(team11.getText().equals(favTeam)) {
+            team11.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team12.setText(winners.get(5).getName());
+        if(team12.getText().equals(favTeam)) {
+            team12.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team13.setText(winners.get(10).getName());
+        if(team13.getText().equals(favTeam)) {
+            team13.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team14.setText(winners.get(9).getName());
+        if(team14.getText().equals(favTeam)) {
+            team14.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team15.setText(winners.get(14).getName());
+        if(team15.getText().equals(favTeam)) {
+            team15.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         team16.setText(winners.get(13).getName());
+        if(team16.getText().equals(favTeam)) {
+            team16.setTextColor(ContextCompat.getColor(this, R.color.favTeam));
+        }
         next.setEnabled(false);
         match1.setOnClickListener(view -> {
             //losuje wynik meczu 1
@@ -338,6 +374,7 @@ public class RoundOf16Activity extends AppCompatActivity {
             save.setRoundOfSixteenResults(results);
             save.setWinnersOfRoundOfSixteen(winnersToRoundOfEight);
             intent.putExtra("save", gson.toJson(save));
+            intent.putExtra("favTeam",favTeam);
 
             startActivity(intent);
         });
