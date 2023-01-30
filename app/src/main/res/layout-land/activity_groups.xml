@@ -9,8 +9,12 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="650dp"
-        android:layout_height="380dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="5dp"
         android:background="@drawable/rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,9 +47,7 @@
         android:scaleY="0.9"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.7">
 
@@ -61,7 +63,7 @@
                 android:textColor="@color/white" />
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:padding="8dp"
                 android:text="Team"
@@ -131,7 +133,7 @@
 
             <TextView
                 android:id="@+id/team1"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:padding="10dp"
                 android:textColor="@color/white" />
@@ -207,7 +209,7 @@
 
             <TextView
                 android:id="@+id/team2"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:padding="10dp"
                 android:textColor="@color/white" />
@@ -283,7 +285,7 @@
 
             <TextView
                 android:id="@+id/team3"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:padding="10dp"
                 android:textColor="@color/white" />
@@ -359,7 +361,7 @@
 
             <TextView
                 android:id="@+id/team4"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="60dp"
                 android:padding="10dp"
                 android:textColor="@color/white" />
@@ -425,7 +427,7 @@
 
     <Button
         android:id="@+id/prevButton"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/enabledButton"
         android:onClick="prevGroup"
@@ -440,8 +442,9 @@
 
     <Button
         android:id="@+id/nextButton"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:layout_height="60dp"
+        android:layout_marginEnd="10dp"
         android:backgroundTint="@color/enabledButton"
         android:onClick="nextGroup"
         android:text="next      group"
@@ -455,7 +458,7 @@
 
     <Button
         android:id="@+id/idButtonSimulateAll"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/enabledButton"
         android:onClick="btnSimulateAll"
@@ -469,8 +472,9 @@
 
     <Button
         android:id="@+id/SimulateSingleGroupId"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:layout_height="60dp"
+        android:layout_marginEnd="10dp"
         android:backgroundTint="@color/enabledButton"
         android:onClick="simulateSingleGroup"
         android:text="simulate 1 group"
@@ -483,7 +487,7 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:layout_height="80dp"
         android:backgroundTint="@color/enabledButton"
         android:onClick="loadChoosingTeam"
@@ -498,8 +502,9 @@
 
     <Button
         android:id="@+id/idButtonRoundOfSixteen"
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:layout_height="80dp"
+        android:layout_marginEnd="10dp"
         android:backgroundTint="@color/enabledButton"
         android:onClick="btnRoundOfSixteenPressed"
         android:text="Go to round      of 8"
