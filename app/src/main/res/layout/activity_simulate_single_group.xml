@@ -7,10 +7,15 @@
     android:background="@drawable/background"
     tools:context=".SimulateSingleGroup">
 
+
     <View
         android:id="@+id/view"
-        android:layout_width="380dp"
-        android:layout_height="600dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:maxWidth="100dp"
+            android:maxWidth="120dp"
             android:text="Team 1"
             android:textAlignment="textEnd"
             android:textColor="#FFFFFF"
@@ -91,8 +96,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:maxWidth="120dp"
             android:text="Team 2"
-            android:maxWidth="100dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -114,9 +119,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:maxWidth="120dp"
             android:text="Team 3"
             android:textAlignment="textEnd"
-            android:maxWidth="100dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -172,8 +177,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:maxWidth="120dp"
             android:text="Team 4"
-            android:maxWidth="100dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -195,9 +200,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:maxWidth="120dp"
             android:text="Team 1"
             android:textAlignment="textEnd"
-            android:maxWidth="100dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -253,8 +258,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:maxWidth="120dp"
             android:text="Team 3"
-            android:maxWidth="100dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -276,9 +281,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:maxWidth="120dp"
             android:text="Team 2"
             android:textAlignment="textEnd"
-            android:maxWidth="100dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -334,8 +339,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:maxWidth="120dp"
             android:text="Team 4"
-            android:maxWidth="100dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -357,9 +362,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:maxWidth="120dp"
             android:text="Team 1"
             android:textAlignment="textEnd"
-            android:maxWidth="100dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -438,9 +443,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:maxWidth="120dp"
             android:text="Team 2"
             android:textAlignment="textEnd"
-            android:maxWidth="100dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -496,8 +501,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:maxWidth="120dp"
             android:text="Team 3"
-            android:maxWidth="100dp"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold" />
